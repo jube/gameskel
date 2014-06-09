@@ -9,7 +9,7 @@ This project is a game skeleton for [game jams](http://en.wikipedia.org/wiki/Gam
 `gameskel` also needs external libraries:
 
 * [SFML2](http://www.sfml-dev.org/)
-* [Boost.Filesystem](http://www.boost.org/libs/filesystem/‎)
+* [Boost.Filesystem](http://www.boost.org/libs/filesystem/)
 
 
 ## Build and install
