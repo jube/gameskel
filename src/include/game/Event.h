@@ -53,5 +53,4 @@ constexpr game::EventType operator"" _type(const char *str, std::size_t sz) {
   return game::Hash(str, sz);
 }
 
-
 #endif // GAME_EVENT_H

@@ -27,12 +27,3 @@ target_link_libraries(example_animation
   game0
   ${Boost_LIBRARIES}
 )
-
-add_executable(example_particles
-  example_particles.cc
-)
-
-target_link_libraries(example_particles
-  game0
-  ${Boost_LIBRARIES}
-)

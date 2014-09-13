@@ -4,7 +4,6 @@ include_directories(${SFML2_INCLUDE_DIRS})
 set(LIBGAME0_SRC
   Animation.cc
   Entity.cc
-  Particle.cc
   Random.cc
   Resource.cc
   World.cc
