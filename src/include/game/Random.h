@@ -26,6 +26,9 @@ namespace game {
 
   class Random {
   public:
+    Random();
+    Random(unsigned seed);
+
     int computeUniformInteger(int min, int max);
 
     float computeUniformFloat(float min, float max);

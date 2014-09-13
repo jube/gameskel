@@ -15,10 +15,22 @@
  */
 #include <game/Random.h>
 
-#include <cassert>
-#include <cmath>
+#include <ctime>
 
 namespace game {
+
+  Random::Random()
+  : m_engine(std::time(nullptr))
+  {
+
+  }
+
+  Random::Random(unsigned seed)
+  : m_engine(seed)
+  {
+
+  }
+
 
   int Random::computeUniformInteger(int min, int max) {
     std::uniform_int_distribution<int> dist(min, max);
