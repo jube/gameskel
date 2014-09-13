@@ -24,36 +24,17 @@
 
 namespace game {
 
-  typedef std::mt19937 Random;
+  class Random {
+  public:
+    int computeUniformInteger(int min, int max);
 
-  template<typename T>
-  using Distribution = std::function<T(Random&)>;
+    float computeUniformFloat(float min, float max);
 
-  namespace Distributions {
+    float computeNormalFloat(float mean, float stddev);
 
-    Distribution<float> constantDistribution(float value);
-
-    Distribution<float> uniformDistribution(float min, float max);
-
-    Distribution<float> normalDistribution(float mean, float stddev);
-
-    Distribution<unsigned> constantDistribution(unsigned value);
-
-    Distribution<unsigned> uniformDistribution(unsigned min, unsigned max);
-
-    Distribution<sf::Vector2f> constantDistribution(sf::Vector2f value);
-
-    Distribution<sf::Vector2f> rectangularDistribution(sf::Vector2f center, sf::Vector2f half_size);
-
-    Distribution<sf::Vector2f> circleDistribution(sf::Vector2f center, float radius);
-
-    Distribution<sf::Vector2f> arcDistribution(sf::Vector2f center, float radius, float angle1, float angle2);
-
-    Distribution<sf::Vector2f> diskDistribution(sf::Vector2f center, float radius);
-
-    Distribution<sf::Color> constantDistribution(sf::Color value);
-
-  }
+  private:
+    std::mt19937 m_engine;
+  };
 
 }
 

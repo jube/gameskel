@@ -20,102 +20,19 @@
 
 namespace game {
 
-  namespace Distributions {
+  int Random::computeUniformInteger(int min, int max) {
+    std::uniform_int_distribution<int> dist(min, max);
+    return dist(m_engine);
+  }
 
-    Distribution<float> constantDistribution(float value) {
-      return [=](Random&) {
-        return value;
-      };
-    }
+  float Random::computeUniformFloat(float min, float max) {
+    std::uniform_real_distribution<float> dist(min, max);
+    return dist(m_engine);
+  }
 
-    Distribution<float> uniformDistribution(float min, float max) {
-      return std::uniform_real_distribution<float>(min, max);
-    }
-
-    Distribution<float> normalDistribution(float mean, float stddev) {
-      return std::normal_distribution<float>(mean, stddev);
-    }
-
-    Distribution<unsigned> constantDistribution(unsigned value) {
-      return [=](Random&) {
-        return value;
-      };
-    }
-
-    Distribution<unsigned> uniformDistribution(unsigned min, unsigned max) {
-      return std::uniform_int_distribution<unsigned>(min, max);
-    }
-
-    Distribution<sf::Vector2f> constantDistribution(sf::Vector2f value) {
-      return [=](Random&) {
-        return value;
-      };
-    }
-
-    Distribution<sf::Vector2f> rectangularDistribution(sf::Vector2f center, sf::Vector2f half_size) {
-      assert(half_size.x > 0);
-      assert(half_size.y > 0);
-
-      return [=](Random& random) {
-        std::uniform_real_distribution<float> dist_x(-half_size.x, half_size.x);
-        std::uniform_real_distribution<float> dist_y(-half_size.y, half_size.y);
-
-        return sf::Vector2f(center.x + dist_x(random), center.y + dist_y(random));
-      };
-    }
-
-    Distribution<sf::Vector2f> circleDistribution(sf::Vector2f center, float radius) {
-      assert(radius > 0);
-
-      return [=](Random& random) {
-        std::uniform_real_distribution<float> dist_angle(0, 2 * M_PI);
-        float angle = dist_angle(random);
-
-        return sf::Vector2f(
-          center.x + radius * std::sin(angle),
-          center.y + radius * std::cos(angle)
-        );
-      };
-    }
-
-    Distribution<sf::Vector2f> arcDistribution(sf::Vector2f center, float radius, float angle1, float angle2) {
-      assert(radius > 0);
-      assert(angle1 < angle2);
-
-      return [=](Random& random) {
-        std::uniform_real_distribution<float> dist_angle(angle1, angle2);
-        float angle = dist_angle(random);
-
-        return sf::Vector2f(
-          center.x + radius * std::sin(angle),
-          center.y + radius * std::cos(angle)
-        );
-      };
-    }
-
-    Distribution<sf::Vector2f> diskDistribution(sf::Vector2f center, float radius) {
-      assert(radius > 0);
-
-      return [=](Random& random) {
-        std::uniform_real_distribution<float> dist_angle(0, 2 * M_PI);
-        float angle = dist_angle(random);
-
-        std::uniform_real_distribution<float> dist_radius(0, radius);
-        float r = dist_radius(random);
-
-        return sf::Vector2f(
-          center.x + r * std::sin(angle),
-          center.y + r * std::cos(angle)
-        );
-      };
-    }
-
-    Distribution<sf::Color> constantDistribution(sf::Color value) {
-      return [=](Random&) {
-        return value;
-      };
-    }
-
+  float Random::computeNormalFloat(float mean, float stddev) {
+    std::normal_distribution<float> dist(mean, stddev);
+    return dist(m_engine);
   }
 
 }
