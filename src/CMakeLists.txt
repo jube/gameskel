@@ -4,8 +4,6 @@ project(GAME CXX)
 
 include(CPackConfig.cmake)
 
-set(GAME_NAME "game")
-
 find_package(Boost REQUIRED COMPONENTS filesystem system)
 
 find_package(PkgConfig REQUIRED)
@@ -25,6 +23,6 @@ install(
 )
 
 install(
-  DIRECTORY "${CMAKE_SOURCE_DIR}/share/${GAME_NAME}"
+  DIRECTORY "${CMAKE_SOURCE_DIR}/share/foo"
   DESTINATION share/games
 )

@@ -20,7 +20,7 @@
 int main() {
   // initialize
   game::World world;
-  sf::RenderWindow window(sf::VideoMode(1024, 768), GAME_NAME " (version " GAME_VERSION ")");
+  sf::RenderWindow window(sf::VideoMode(1024, 768), "Foo (version " GAME_VERSION ")");
   window.setKeyRepeatEnabled(false);
 
   // load resources
