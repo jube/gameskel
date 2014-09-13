@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 2.8)
 project(GAME CXX)
 
 include(CPackConfig.cmake)
+include(GNUInstallDirs)
 
 find_package(Boost REQUIRED COMPONENTS filesystem system)
 
@@ -19,10 +20,10 @@ add_subdirectory(games)
 
 install(
   DIRECTORY "${CMAKE_SOURCE_DIR}/include/game"
-  DESTINATION include
+  DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
 )
 
 install(
   DIRECTORY "${CMAKE_SOURCE_DIR}/share/foo"
-  DESTINATION share/games
+  DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/games"
 )
