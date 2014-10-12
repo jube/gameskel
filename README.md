@@ -38,4 +38,4 @@ Finally, you can install the files (you may need root permissions):
 
 ## Copyright
 
-This library is open source and is distributed under the [ISC licence](http://opensource.org/licenses/isc-license).
+This library is open source and is distributed under the [MIT license](http://opensource.org/licenses/MIT).
