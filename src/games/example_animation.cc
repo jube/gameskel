@@ -111,7 +111,7 @@ int main(int argc, char *argv[]) {
   Ninja ninja(manager);
   ninja.setPosition(106, 56);
 
-  world.addEntity(&ninja, game::Memory::FROM_STACK);
+  world.addEntity(&ninja);
 
   // main loop
   sf::Clock clock;
