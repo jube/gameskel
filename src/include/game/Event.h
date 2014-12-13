@@ -24,11 +24,11 @@
 
 #include <cstdint>
 #include <functional>
+#include <map>
 
+#include <game/Entity.h>
 
 namespace game {
-  class Entity;
-
   typedef uint64_t EventType;
 
 #define INVALID_EVENT 0
@@ -52,6 +52,38 @@ namespace game {
   };
 
   typedef std::function<EventStatus(Entity*, EventType, Event*)> EventHandler;
+
+  class EventManager {
+  public:
+
+    void registerHandler(EventType type, EventHandler handler);
+
+    template<typename E>
+    void registerHandler(EventHandler handler) {
+      static_assert(std::is_base_of<Event, E>::value, "E must be an Event");
+      static_assert(E::type != INVALID_EVENT, "E must define its type");
+      registerHandler(E::type, handler);
+    }
+
+    template<typename E, typename R, typename T>
+    void registerHandler(R T::*pm, T *obj) {
+      static_assert(std::is_base_of<Event, E>::value, "E must be an Event");
+      static_assert(E::type != INVALID_EVENT, "E must define its type");
+      registerHandler(E::type, std::bind(pm, obj));
+    }
+
+    void triggerEvent(Entity *origin, EventType type, Event *event);
+
+    template<typename E>
+    void triggerEvent(Entity *origin, E *event) {
+      static_assert(std::is_base_of<Event, E>::value, "E must be an Event");
+      static_assert(E::type != INVALID_EVENT, "E must define its type");
+      triggerEvent(origin, E::type, event);
+    }
+
+  private:
+    std::map<EventType, std::vector<EventHandler>> m_handlers;
+  };
 
 }
 

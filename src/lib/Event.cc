@@ -19,31 +19,41 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
-#ifndef GAME_WORLD_H
-#define GAME_WORLD_H
+#include <game/Event.h>
 
-#include <vector>
-
-#include <SFML/Graphics.hpp>
-
-#include <game/Entity.h>
+#include <cassert>
 
 namespace game {
-  class World {
-  public:
 
-    void update(float dt);
-    void render(sf::RenderWindow& window);
+  void EventManager::registerHandler(EventType type, EventHandler handler) {
+    assert(handler);
+    auto it = m_handlers.find(type);
 
-    void addEntity(Entity *e);
-    Entity *removeEntity(Entity *e);
+    if (it == m_handlers.end()) {
+      bool inserted;
+      std::tie(it, inserted) = m_handlers.insert(std::make_pair(type, std::vector<EventHandler>()));
+      assert(inserted);
+    }
 
-  private:
-    std::vector<Entity*> m_entities;
-  };
+    it->second.push_back(handler);
+  }
 
+  void EventManager::triggerEvent(Entity *origin, EventType type, Event *event) {
+    auto it = m_handlers.find(type);
+
+    if (it == m_handlers.end()) {
+      return;
+    }
+
+    std::vector<EventHandler> kept;
+
+    for (auto handler : it->second) {
+      if (handler(origin, type, event) == EventStatus::KEEP) {
+        kept.push_back(handler);
+      }
+    }
+
+    std::swap(it->second, kept);
+  }
 
 }
-
-
-#endif // GAME_WORLD_H
