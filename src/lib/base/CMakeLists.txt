@@ -1,5 +1,6 @@
 set(LIBGAMEBASE0_SRC
   Event.cc
+  Log.cc
   Random.cc
 )
 
