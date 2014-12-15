@@ -30,7 +30,7 @@ namespace game {
 
   static constexpr float skin = 0.15;
 
-  static float lengthSquared(const sf::Vector2f& v) {
+  static float lengthSquared(const Vector2f& v) {
     return v.x * v.x + v.y * v.y;
   }
 
@@ -49,7 +49,7 @@ namespace game {
   }
 
   static bool collidesCircleVsCircle(const Body& lhs, const Body& rhs, Manifold *m) {
-    sf::Vector2f n = rhs.pos - lhs.pos;
+    Vector2f n = rhs.pos - lhs.pos;
     float r = lhs.shape.circle.radius + rhs.shape.circle.radius;
     float d2 = lengthSquared(n);
 
@@ -71,9 +71,9 @@ namespace game {
   }
 
   static bool collidesRectVsCircle(const Body& lhs, const Body& rhs, Manifold *m) {
-    sf::Vector2f n = rhs.pos - lhs.pos;
+    Vector2f n = rhs.pos - lhs.pos;
 
-    sf::Vector2f closest = n;
+    Vector2f closest = n;
 
     float x_extent = lhs.shape.rectangle.width / 2;
     float y_extent = lhs.shape.rectangle.height / 2;
@@ -101,7 +101,7 @@ namespace game {
       }
     }
 
-    sf::Vector2f normal = n - closest;
+    Vector2f normal = n - closest;
 
     float d2 = lengthSquared(normal);
     float r = rhs.shape.circle.radius;
@@ -135,7 +135,7 @@ namespace game {
   }
 
   static bool collidesRectVsRect(const Body& lhs, const Body& rhs, Manifold *m) {
-    sf::Vector2f n = rhs.pos - lhs.pos;
+    Vector2f n = rhs.pos - lhs.pos;
 
     float l_extent_x = lhs.shape.rectangle.width / 2;
     float r_extent_x = rhs.shape.rectangle.width / 2;

@@ -24,7 +24,7 @@
 
 #include <cstdint>
 
-#include <SFML/System/Vector2.hpp>
+#include <game/model/Vector.h>
 
 namespace game {
 
@@ -55,7 +55,7 @@ namespace game {
     Body *a;
     Body *b;
     float penetration;
-    sf::Vector2f normal;
+    Vector2f normal;
   };
 
   struct Body {
@@ -66,9 +66,10 @@ namespace game {
     };
 
     Type type;
-    sf::Vector2f pos; /**< center of the body */
-    sf::Vector2f velocity;
+    Vector2f pos; /**< center of the body */
+    Vector2f velocity;
     Shape shape;
+    float inverse_mass;
     float restitution;
     uint32_t layers;
 
