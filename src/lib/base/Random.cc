@@ -19,50 +19,38 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
-#include <game/Animation.h>
+#include <game/base/Random.h>
 
-#include <iostream>
+#include <ctime>
 
 namespace game {
 
-  void Animation::addFrame(const AnimationFrame& frame) {
-    if (m_frames.empty()) {
-      m_current_duration_in_frame = frame.duration;
-      m_current_frame = 0;
-    }
+  Random::Random()
+  : m_engine(std::time(nullptr))
+  {
 
-    m_frames.push_back(frame);
   }
 
-  void Animation::update(float dt) {
-    if (m_frames.empty()) {
-      return;
-    }
+  Random::Random(unsigned seed)
+  : m_engine(seed)
+  {
 
-    m_current_duration_in_frame -= dt;
-
-    while (m_current_duration_in_frame < 0) {
-      m_current_frame = (m_current_frame + 1) % m_frames.size();
-      m_current_duration_in_frame += m_frames[m_current_frame].duration;
-    }
   }
 
-  sf::Texture *Animation::currentTexture() {
-    if (m_frames.empty()) {
-      std::cerr << "Error! The animation does not have any frame: " << name() << std::endl;
-      return nullptr;
-    }
 
-    return m_frames[m_current_frame].texture;
+  int Random::computeUniformInteger(int min, int max) {
+    std::uniform_int_distribution<int> dist(min, max);
+    return dist(m_engine);
   }
 
-  sf::IntRect Animation::currentTextureRect() {
-    if (m_frames.empty()) {
-      std::cerr << "Error! The animation does not have any frame: " << name() << std::endl;
-      return sf::IntRect();
-    }
+  float Random::computeUniformFloat(float min, float max) {
+    std::uniform_real_distribution<float> dist(min, max);
+    return dist(m_engine);
+  }
 
-    return m_frames[m_current_frame].bounds;
+  float Random::computeNormalFloat(float mean, float stddev) {
+    std::normal_distribution<float> dist(mean, stddev);
+    return dist(m_engine);
   }
 
 }

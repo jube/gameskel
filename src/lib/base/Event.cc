@@ -19,44 +19,41 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
-#include <game/World.h>
+#include <game/base/Event.h>
 
 #include <cassert>
-#include <algorithm>
-#include <memory>
 
 namespace game {
 
-  void World::update(float dt) {
-    std::sort(m_entities.begin(), m_entities.end(), [](const Entity *e1, const Entity *e2) {
-      return e1->priority() < e2->priority();
-    });
+  void EventManager::registerHandler(EventType type, EventHandler handler) {
+    assert(handler);
+    auto it = m_handlers.find(type);
 
-    for (auto entity : m_entities) {
-      entity->update(dt);
-    }
-  }
-
-  void World::render(sf::RenderWindow& window) {
-    for (auto entity : m_entities) {
-      entity->render(window);
-    }
-  }
-
-  void World::addEntity(Entity *e) {
-    m_entities.push_back(e);
-  }
-
-  Entity *World::removeEntity(Entity *e) {
-    // erase-remove idiom
-    auto it = std::remove(m_entities.begin(), m_entities.end(), e);
-
-    if (it != m_entities.end()) {
-      m_entities.erase(it, m_entities.end());
-      return e;
+    if (it == m_handlers.end()) {
+      bool inserted;
+      std::tie(it, inserted) = m_handlers.insert(std::make_pair(type, std::vector<EventHandler>()));
+      assert(inserted);
     }
 
-    return nullptr;
+    it->second.push_back(handler);
+  }
+
+  void EventManager::triggerEvent(EventType type, Event *event) {
+    auto it = m_handlers.find(type);
+
+    if (it == m_handlers.end()) {
+      return;
+    }
+
+    std::vector<EventHandler> kept;
+
+    for (auto handler : it->second) {
+      if (handler(type, event) == EventStatus::KEEP) {
+        kept.push_back(handler);
+      }
+    }
+
+    std::swap(it->second, kept);
   }
 
 }

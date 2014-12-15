@@ -19,23 +19,44 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
-#include <game/Entity.h>
+#include <game/graphics/World.h>
+
+#include <cassert>
+#include <algorithm>
+#include <memory>
 
 namespace game {
 
-  Entity::~Entity() {
+  void World::update(float dt) {
+    std::sort(m_entities.begin(), m_entities.end(), [](const Entity *e1, const Entity *e2) {
+      return e1->priority() < e2->priority();
+    });
+
+    for (auto entity : m_entities) {
+      entity->update(dt);
+    }
   }
 
-  int Entity::priority() const {
-    return 0;
+  void World::render(sf::RenderWindow& window) {
+    for (auto entity : m_entities) {
+      entity->render(window);
+    }
   }
 
-  void Entity::update(float dt) {
-    // default: do nothing
+  void World::addEntity(Entity *e) {
+    m_entities.push_back(e);
   }
 
-  void Entity::render(sf::RenderWindow& window) {
-    // default: do nothing
+  Entity *World::removeEntity(Entity *e) {
+    // erase-remove idiom
+    auto it = std::remove(m_entities.begin(), m_entities.end(), e);
+
+    if (it != m_entities.end()) {
+      m_entities.erase(it, m_entities.end());
+      return e;
+    }
+
+    return nullptr;
   }
 
 }

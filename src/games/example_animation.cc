@@ -25,9 +25,9 @@
 
 #include <SFML/Graphics.hpp>
 
-#include <game/Animation.h>
-#include <game/Resource.h>
-#include <game/World.h>
+#include <game/graphics/Animation.h>
+#include <game/graphics/Resource.h>
+#include <game/graphics/World.h>
 
 #include "config.h"
 

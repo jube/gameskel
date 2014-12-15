@@ -19,31 +19,50 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
-#ifndef GAME_WORLD_H
-#define GAME_WORLD_H
+#include <game/graphics/Animation.h>
 
-#include <vector>
-
-#include <SFML/Graphics.hpp>
-
-#include <game/Entity.h>
+#include <iostream>
 
 namespace game {
-  class World {
-  public:
 
-    void update(float dt);
-    void render(sf::RenderWindow& window);
+  void Animation::addFrame(const AnimationFrame& frame) {
+    if (m_frames.empty()) {
+      m_current_duration_in_frame = frame.duration;
+      m_current_frame = 0;
+    }
 
-    void addEntity(Entity *e);
-    Entity *removeEntity(Entity *e);
+    m_frames.push_back(frame);
+  }
 
-  private:
-    std::vector<Entity*> m_entities;
-  };
+  void Animation::update(float dt) {
+    if (m_frames.empty()) {
+      return;
+    }
 
+    m_current_duration_in_frame -= dt;
+
+    while (m_current_duration_in_frame < 0) {
+      m_current_frame = (m_current_frame + 1) % m_frames.size();
+      m_current_duration_in_frame += m_frames[m_current_frame].duration;
+    }
+  }
+
+  sf::Texture *Animation::currentTexture() {
+    if (m_frames.empty()) {
+      std::cerr << "Error! The animation does not have any frame: " << name() << std::endl;
+      return nullptr;
+    }
+
+    return m_frames[m_current_frame].texture;
+  }
+
+  sf::IntRect Animation::currentTextureRect() {
+    if (m_frames.empty()) {
+      std::cerr << "Error! The animation does not have any frame: " << name() << std::endl;
+      return sf::IntRect();
+    }
+
+    return m_frames[m_current_frame].bounds;
+  }
 
 }
-
-
-#endif // GAME_WORLD_H

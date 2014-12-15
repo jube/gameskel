@@ -22,11 +22,9 @@
 #ifndef GAME_EVENT_H
 #define GAME_EVENT_H
 
-#include <cstdint>
 #include <functional>
 #include <map>
-
-#include <game/Entity.h>
+#include <vector>
 
 namespace game {
   typedef uint64_t EventType;
@@ -51,7 +49,7 @@ namespace game {
     DIE,  /**< The handler can be removed */
   };
 
-  typedef std::function<EventStatus(Entity*, EventType, Event*)> EventHandler;
+  typedef std::function<EventStatus(EventType, Event*)> EventHandler;
 
   class EventManager {
   public:
@@ -72,13 +70,13 @@ namespace game {
       registerHandler(E::type, std::bind(pm, obj));
     }
 
-    void triggerEvent(Entity *origin, EventType type, Event *event);
+    void triggerEvent(EventType type, Event *event);
 
     template<typename E>
-    void triggerEvent(Entity *origin, E *event) {
+    void triggerEvent(E *event) {
       static_assert(std::is_base_of<Event, E>::value, "E must be an Event");
       static_assert(E::type != INVALID_EVENT, "E must define its type");
-      triggerEvent(origin, E::type, event);
+      triggerEvent(E::type, event);
     }
 
   private:

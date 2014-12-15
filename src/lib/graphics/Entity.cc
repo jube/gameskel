@@ -19,48 +19,23 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
-#ifndef GAME_ANIMATION_H
-#define GAME_ANIMATION_H
-
-#include <vector>
-
-#include <SFML/Graphics/Texture.hpp>
-#include <SFML/Graphics/Rect.hpp>
-
-#include <game/Entity.h>
+#include <game/graphics/Entity.h>
 
 namespace game {
 
-  struct AnimationFrame {
-    sf::Texture *texture;
-    sf::IntRect bounds;
-    float duration;
-  };
+  Entity::~Entity() {
+  }
 
-  class Animation {
-  public:
-    Animation(std::string name)
-    : m_name(std::move(name)) {
-    }
+  int Entity::priority() const {
+    return 0;
+  }
 
-    const std::string& name() {
-      return m_name;
-    }
+  void Entity::update(float dt) {
+    // default: do nothing
+  }
 
-    void addFrame(const AnimationFrame& frame);
-
-    void update(float dt);
-
-    sf::Texture *currentTexture();
-    sf::IntRect currentTextureRect();
-
-  private:
-    std::string m_name;
-    std::size_t m_current_frame = 0;
-    float m_current_duration_in_frame = 0.0f;
-    std::vector<AnimationFrame> m_frames;
-  };
+  void Entity::render(sf::RenderWindow& window) {
+    // default: do nothing
+  }
 
 }
-
-#endif // GAME_ANIMATION_H

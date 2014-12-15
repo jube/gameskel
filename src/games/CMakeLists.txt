@@ -8,7 +8,8 @@ add_executable(foo
 )
 
 target_link_libraries(foo
-  game0
+  gamebase0
+  gamegraphics0
   ${Boost_LIBRARIES}
 )
 
@@ -24,6 +25,7 @@ add_executable(example_animation
 )
 
 target_link_libraries(example_animation
-  game0
+  gamebase0
+  gamegraphics0
   ${Boost_LIBRARIES}
 )

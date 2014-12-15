@@ -19,38 +19,46 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
-#include <game/Random.h>
+#ifndef GAME_ANIMATION_H
+#define GAME_ANIMATION_H
 
-#include <ctime>
+#include <vector>
+
+#include <SFML/Graphics/Texture.hpp>
+#include <SFML/Graphics/Rect.hpp>
 
 namespace game {
 
-  Random::Random()
-  : m_engine(std::time(nullptr))
-  {
+  struct AnimationFrame {
+    sf::Texture *texture;
+    sf::IntRect bounds;
+    float duration;
+  };
 
-  }
+  class Animation {
+  public:
+    Animation(std::string name)
+    : m_name(std::move(name)) {
+    }
 
-  Random::Random(unsigned seed)
-  : m_engine(seed)
-  {
+    const std::string& name() {
+      return m_name;
+    }
 
-  }
+    void addFrame(const AnimationFrame& frame);
 
+    void update(float dt);
 
-  int Random::computeUniformInteger(int min, int max) {
-    std::uniform_int_distribution<int> dist(min, max);
-    return dist(m_engine);
-  }
+    sf::Texture *currentTexture();
+    sf::IntRect currentTextureRect();
 
-  float Random::computeUniformFloat(float min, float max) {
-    std::uniform_real_distribution<float> dist(min, max);
-    return dist(m_engine);
-  }
-
-  float Random::computeNormalFloat(float mean, float stddev) {
-    std::normal_distribution<float> dist(mean, stddev);
-    return dist(m_engine);
-  }
+  private:
+    std::string m_name;
+    std::size_t m_current_frame = 0;
+    float m_current_duration_in_frame = 0.0f;
+    std::vector<AnimationFrame> m_frames;
+  };
 
 }
+
+#endif // GAME_ANIMATION_H
