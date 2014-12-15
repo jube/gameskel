@@ -49,7 +49,7 @@ namespace game {
     DIE,  /**< The handler can be removed */
   };
 
-  typedef std::function<EventStatus(EventType, Event*)> EventHandler;
+  typedef std::function<EventStatus(EventType, Event *)> EventHandler;
 
   class EventManager {
   public:

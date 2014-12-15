@@ -36,8 +36,7 @@ namespace fs = boost::filesystem;
 class Ninja : public game::Entity, public sf::Transformable {
 public:
   Ninja(game::ResourceManager& manager)
-  : m_texture_walking("walking")
-  {
+    : m_texture_walking("walking") {
     m_texture_idle = manager.getTexture("ninja/idle.png");
 
     auto ninja = manager.getTexture("ninja/spritesheet.png");
@@ -115,9 +114,11 @@ int main(int argc, char *argv[]) {
 
   // main loop
   sf::Clock clock;
+
   while (window.isOpen()) {
     // input
     sf::Event event;
+
     while (window.pollEvent(event)) {
       if (event.type == sf::Event::Closed) {
         window.close();

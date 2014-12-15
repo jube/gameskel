@@ -26,14 +26,12 @@
 namespace game {
 
   Random::Random()
-  : m_engine(std::time(nullptr))
-  {
+    : m_engine(std::time(nullptr)) {
 
   }
 
   Random::Random(unsigned seed)
-  : m_engine(seed)
-  {
+    : m_engine(seed) {
 
   }
 

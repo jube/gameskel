@@ -36,7 +36,7 @@ namespace game {
     Model *removeModel(Model *e);
 
   private:
-    std::vector<Model*> m_models;
+    std::vector<Model *> m_models;
   };
 
 

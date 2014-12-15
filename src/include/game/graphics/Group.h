@@ -39,7 +39,7 @@ namespace game {
     Entity *removeEntity(Entity *e);
 
   private:
-    std::vector<Entity*> m_entities;
+    std::vector<Entity *> m_entities;
   };
 
 

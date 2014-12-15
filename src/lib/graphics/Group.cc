@@ -28,7 +28,7 @@
 namespace game {
 
   void Group::update(float dt) {
-    std::sort(m_entities.begin(), m_entities.end(), [](const Entity *e1, const Entity *e2) {
+    std::sort(m_entities.begin(), m_entities.end(), [](const Entity * e1, const Entity * e2) {
       return e1->priority() < e2->priority();
     });
 
