@@ -1,5 +1,7 @@
 set(LIBGAMEMODEL0_SRC
+  Body.cc
   Model.cc
+  Physics.cc
   World.cc
 )
 
