@@ -35,7 +35,7 @@ namespace game {
     void update(float dt);
     void render(sf::RenderWindow& window);
 
-    void addEntity(Entity *e);
+    Group& addEntity(Entity *e);
     Entity *removeEntity(Entity *e);
 
   private:

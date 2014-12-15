@@ -43,8 +43,9 @@ namespace game {
     }
   }
 
-  void Group::addEntity(Entity *e) {
+  Group& Group::addEntity(Entity *e) {
     m_entities.push_back(e);
+    return *this;
   }
 
   Entity *Group::removeEntity(Entity *e) {
