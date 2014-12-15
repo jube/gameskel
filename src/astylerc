@@ -1,4 +1,4 @@
-# Artistic Style (astyle) format file for Gzzzt
+# Artistic Style (astyle) format file
 # Run:
 # $ astyle --options=astylerc '*'
 # Documentation: http://astyle.sourceforge.net/astyle.html
