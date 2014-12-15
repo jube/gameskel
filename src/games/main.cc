@@ -19,13 +19,13 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
-#include <game/graphics/World.h>
+#include <game/graphics/Group.h>
 
 #include "config.h"
 
 int main() {
   // initialize
-  game::World world;
+  game::Group group;
   sf::RenderWindow window(sf::VideoMode(1024, 768), "Foo (version " GAME_VERSION ")");
   window.setKeyRepeatEnabled(false);
 
@@ -59,11 +59,11 @@ int main() {
 
     // update
     sf::Time elapsed = clock.restart();
-    world.update(elapsed.asSeconds());
+    group.update(elapsed.asSeconds());
 
     // render
     window.clear(sf::Color::White);
-    world.render(window);
+    group.render(window);
     window.display();
   }
 

@@ -19,44 +19,31 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
-#include <game/graphics/World.h>
+#ifndef GAME_GROUP_H
+#define GAME_GROUP_H
 
-#include <cassert>
-#include <algorithm>
-#include <memory>
+#include <vector>
+
+#include <SFML/Graphics.hpp>
+
+#include <game/graphics/Entity.h>
 
 namespace game {
+  class Group {
+  public:
 
-  void World::update(float dt) {
-    std::sort(m_entities.begin(), m_entities.end(), [](const Entity *e1, const Entity *e2) {
-      return e1->priority() < e2->priority();
-    });
+    void update(float dt);
+    void render(sf::RenderWindow& window);
 
-    for (auto entity : m_entities) {
-      entity->update(dt);
-    }
-  }
+    void addEntity(Entity *e);
+    Entity *removeEntity(Entity *e);
 
-  void World::render(sf::RenderWindow& window) {
-    for (auto entity : m_entities) {
-      entity->render(window);
-    }
-  }
+  private:
+    std::vector<Entity*> m_entities;
+  };
 
-  void World::addEntity(Entity *e) {
-    m_entities.push_back(e);
-  }
-
-  Entity *World::removeEntity(Entity *e) {
-    // erase-remove idiom
-    auto it = std::remove(m_entities.begin(), m_entities.end(), e);
-
-    if (it != m_entities.end()) {
-      m_entities.erase(it, m_entities.end());
-      return e;
-    }
-
-    return nullptr;
-  }
 
 }
+
+
+#endif // GAME_GROUP_H

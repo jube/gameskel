@@ -27,7 +27,7 @@
 
 #include <game/graphics/Animation.h>
 #include <game/graphics/Resource.h>
-#include <game/graphics/World.h>
+#include <game/graphics/Group.h>
 
 #include "config.h"
 
@@ -89,7 +89,7 @@ private:
 
 int main(int argc, char *argv[]) {
   // initialize
-  game::World world;
+  game::Group group;
 
   sf::RenderWindow window(sf::VideoMode(300, 200), "Animation (version " GAME_VERSION ")");
   window.setKeyRepeatEnabled(false);
@@ -111,7 +111,7 @@ int main(int argc, char *argv[]) {
   Ninja ninja(manager);
   ninja.setPosition(106, 56);
 
-  world.addEntity(&ninja);
+  group.addEntity(&ninja);
 
   // main loop
   sf::Clock clock;
@@ -149,11 +149,11 @@ int main(int argc, char *argv[]) {
 
     // update
     sf::Time elapsed = clock.restart();
-    world.update(elapsed.asSeconds());
+    group.update(elapsed.asSeconds());
 
     // render
     window.clear(sf::Color::White);
-    world.render(window);
+    group.render(window);
     window.display();
   }
 

@@ -4,8 +4,8 @@ include_directories(${SFML2_INCLUDE_DIRS})
 set(LIBGAMEGRAPHICS0_SRC
   Animation.cc
   Entity.cc
+  Group.cc
   Resource.cc
-  World.cc
 )
 
 add_library(gamegraphics0 SHARED
