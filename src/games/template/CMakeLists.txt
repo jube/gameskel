@@ -1,13 +1,13 @@
-add_executable(gametemplate
+add_executable(game_template
   main.cc
 )
 
-target_link_libraries(gametemplate
+target_link_libraries(game_template
   gamebase0
   gamegraphics0
 )
 
 install(
-  TARGETS gametemplate
+  TARGETS game_template
   RUNTIME DESTINATION games
 )
