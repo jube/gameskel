@@ -1,3 +1,5 @@
+include_directories(${Boost_INCLUDE_DIRS})
+
 set(LIBGAMEBASE0_SRC
   Assets.cc
   Event.cc
@@ -7,6 +9,10 @@ set(LIBGAMEBASE0_SRC
 
 add_library(gamebase0 SHARED
   ${LIBGAMEBASE0_SRC}
+)
+
+target_link_libraries(gamebase0
+  ${Boost_LIBRARIES}
 )
 
 set_target_properties(gamebase0
