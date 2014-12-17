@@ -29,14 +29,15 @@
 
 namespace game {
 
-  struct AnimationFrame {
-    sf::Texture *texture;
-    sf::IntRect bounds;
-    float duration;
-  };
-
   class Animation {
   public:
+
+    struct Frame {
+      sf::Texture *texture;
+      sf::IntRect bounds;
+      float duration;
+    };
+
     Animation(std::string name)
       : m_name(std::move(name)) {
     }
@@ -45,7 +46,7 @@ namespace game {
       return m_name;
     }
 
-    void addFrame(const AnimationFrame& frame);
+    void addFrame(const Frame& frame);
 
     void update(float dt);
 
@@ -56,7 +57,7 @@ namespace game {
     std::string m_name;
     std::size_t m_current_frame = 0;
     float m_current_duration_in_frame = 0.0f;
-    std::vector<AnimationFrame> m_frames;
+    std::vector<Frame> m_frames;
   };
 
 }

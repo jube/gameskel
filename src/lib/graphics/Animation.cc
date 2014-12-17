@@ -25,7 +25,7 @@
 
 namespace game {
 
-  void Animation::addFrame(const AnimationFrame& frame) {
+  void Animation::addFrame(const Frame& frame) {
     if (m_frames.empty()) {
       m_current_duration_in_frame = frame.duration;
       m_current_frame = 0;
