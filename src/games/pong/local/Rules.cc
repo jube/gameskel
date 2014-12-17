@@ -52,7 +52,7 @@ static float computeNewAngle(const Ball& ball, const Racket& racket) {
 }
 
 void Rules::update(float dt) {
-  static constexpr float X_LIMIT = Ground::WIDTH / 2 - 2 * Ball::RADIUS;
+  static constexpr float X_LIMIT = Ground::WIDTH / 2 - Ball::RADIUS;
 
   sf::Vector2f velocity = b->getVelocity();
   auto position = b->getPosition();

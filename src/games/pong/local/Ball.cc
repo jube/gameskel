@@ -26,7 +26,6 @@
 
 
 void Ball::update(float dt) {
-  static constexpr float X_LIMIT = Ground::WIDTH / 2 - RADIUS;
   static constexpr float Y_LIMIT = Ground::HEIGHT / 2 - RADIUS;
 
   m_pos += m_velocity * dt;
@@ -41,15 +40,6 @@ void Ball::update(float dt) {
     m_pos.y = - Y_LIMIT;
   }
 
-  if (m_pos.x > X_LIMIT) {
-    m_velocity.x = - m_velocity.x;
-    m_pos.x = X_LIMIT;
-  }
-
-  if (m_pos.x < - X_LIMIT) {
-    m_velocity.x = - m_velocity.x;
-    m_pos.x = - X_LIMIT;
-  }
 }
 
 void Ball::render(sf::RenderWindow& window) {
