@@ -43,8 +43,8 @@ namespace game {
     }
   }
 
-  Group& Group::addEntity(Entity *e) {
-    m_entities.push_back(e);
+  Group& Group::addEntity(Entity& e) {
+    m_entities.push_back(&e);
     return *this;
   }
 

@@ -110,7 +110,7 @@ int main(int argc, char *argv[]) {
   Ninja ninja(manager);
   ninja.setPosition(106, 56);
 
-  group.addEntity(&ninja);
+  group.addEntity(ninja);
 
   // main loop
   sf::Clock clock;

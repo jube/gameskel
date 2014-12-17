@@ -33,8 +33,8 @@ namespace game {
     }
   }
 
-  void World::addModel(Model *e) {
-    m_models.push_back(e);
+  void World::addModel(Model& e) {
+    m_models.push_back(&e);
   }
 
   Model *World::removeModel(Model *e) {
