@@ -19,50 +19,33 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
-#ifndef GAME_RESOURCE_H
-#define GAME_RESOURCE_H
-
-#include <string>
-#include <map>
-#include <memory>
-
-#include <SFML/Graphics/Texture.hpp>
-#include <SFML/Graphics/Font.hpp>
-#include <SFML/Audio/SoundBuffer.hpp>
-
 #include <game/base/Assets.h>
+
+#include <cassert>
+
+#include <boost/filesystem.hpp>
+
+namespace fs = boost::filesystem;
 
 namespace game {
 
-  template<typename T>
-  class ResourceCache {
-  public:
-    T *findResource(const std::string& key);
-    T *loadResource(const std::string& key, const std::string& path);
-  private:
-    std::map<std::string, std::unique_ptr<T>> m_cache;
-  };
+  void AssetManager::addSearchDir(std::string path) {
+    m_searchdirs.emplace_back(std::move(path));
+  }
 
-  extern template class ResourceCache<sf::Font>;
-  extern template class ResourceCache<sf::SoundBuffer>;
-  extern template class ResourceCache<sf::Texture>;
+  std::string AssetManager::getAbsolutePath(const std::string& relative_path) {
+    fs::path file(relative_path);
 
-  class ResourceManager : public AssetManager {
-  public:
-    sf::Font *getFont(const std::string& path);
-    sf::SoundBuffer *getSoundBuffer(const std::string& path);
-    sf::Texture *getTexture(const std::string& path);
+    for (fs::path base : m_searchdirs) {
+      fs::path absolute_path = base / file;
 
-  private:
-    ResourceCache<sf::Font> m_fonts;
-    ResourceCache<sf::SoundBuffer> m_sounds;
-    ResourceCache<sf::Texture> m_textures;
+      if (fs::is_regular_file(absolute_path)) {
+        std::clog << "Found a resource file: " << absolute_path << std::endl;
+        return absolute_path.string();
+      }
+    }
 
-  private:
-    template<typename T>
-    T *getResource(const std::string& path, ResourceCache<T>& cache);
-  };
+    return std::string();
+  }
 
 }
-
-#endif // GAME_RESOURCE_H

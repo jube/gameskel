@@ -56,10 +56,6 @@ namespace game {
   template class ResourceCache<sf::Texture>;
 
 
-  void ResourceManager::addSearchDir(std::string path) {
-    m_searchdirs.emplace_back(std::move(path));
-  }
-
   sf::Font *ResourceManager::getFont(const std::string& path) {
     return getResource(path, m_fonts);
   }
@@ -80,19 +76,14 @@ namespace game {
       return res;
     }
 
-    fs::path file(path);
+    auto absolute_path = getAbsolutePath(path);
 
-    for (fs::path base : m_searchdirs) {
-      fs::path absolute_path = base / file;
-
-      if (fs::is_regular_file(absolute_path)) {
-        std::clog << "Found a resource file: " << absolute_path << std::endl;
-        return cache.loadResource(path, absolute_path.string());
-      }
+    if (absolute_path.empty()) {
+      std::cerr << "Error! Could not find the following file: " << path << std::endl;
+      return nullptr;
     }
 
-    std::cerr << "Error! Could not find the following file: " << path << std::endl;
-    return nullptr;
+    return cache.loadResource(path, absolute_path);
   }
 
 }
