@@ -32,6 +32,7 @@ namespace game {
    */
   class Log {
   public:
+    Log() = delete;
 
     enum Level : int {
       DEBUG,
