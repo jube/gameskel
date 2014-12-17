@@ -67,12 +67,8 @@ int main() {
   sf::RenderWindow window(sf::VideoMode(INITIAL_WIDTH, INITIAL_HEIGHT), "Pong (version " GAME_VERSION ")");
   window.setKeyRepeatEnabled(false);
 
-  game::Log::setLevel(game::Log::PHYSICS, game::Log::DEBUG);
-
-  // load resources
-
-
   // add entities
+
   game::Group group;
   Ground ground;
   Racket lft(Racket::Location::LEFT);
@@ -84,6 +80,7 @@ int main() {
   group.addEntity(ground).addEntity(ball).addEntity(lft).addEntity(rgt).addEntity(rules);
 
   // main loop
+
   sf::View view;
   view.setCenter({ 0.0f, 0.0f });
   view.setSize({ 200.0f, 100.0f });
