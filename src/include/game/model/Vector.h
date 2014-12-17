@@ -24,30 +24,45 @@
 
 namespace game {
 
+  /**
+   * @ingroup model
+   */
   struct Vector2f {
     float x;
     float y;
   };
 
   // equality
+  /**
+   * @ingroup model
+   */
   inline
   bool operator==(const Vector2f& lhs, const Vector2f& rhs) {
     return lhs.x == rhs.x && lhs.y == rhs.y;
   }
 
   // unary minus
+  /**
+   * @ingroup model
+   */
   inline
   Vector2f operator-(const Vector2f& v) {
     return { - v.x, - v.y };
   }
 
   // addition
+  /**
+   * @ingroup model
+   */
   inline
   Vector2f operator+(const Vector2f& lhs, const Vector2f& rhs) {
     return { lhs.x + rhs.x, lhs.y + rhs.y };
   }
 
   // addition and assignment
+  /**
+   * @ingroup model
+   */
   inline
   Vector2f& operator+=(Vector2f& lhs, const Vector2f& rhs) {
     lhs.x += rhs.x;
@@ -56,12 +71,18 @@ namespace game {
   }
 
   // substraction
+  /**
+   * @ingroup model
+   */
   inline
   Vector2f operator-(const Vector2f& lhs, const Vector2f& rhs) {
     return { lhs.x - rhs.x, lhs.y - rhs.y };
   }
 
   // substraction and assignment
+  /**
+   * @ingroup model
+   */
   inline
   Vector2f& operator-=(Vector2f& lhs, const Vector2f& rhs) {
     lhs.x -= rhs.x;
@@ -70,6 +91,9 @@ namespace game {
   }
 
   // scalar multiplication (on left)
+  /**
+   * @ingroup model
+   */
   inline
   Vector2f operator*(float lhs, const Vector2f& rhs) {
     return { lhs * rhs.x, lhs * rhs.y };
@@ -77,11 +101,17 @@ namespace game {
 
   // scalar multiplication (on right)
   inline
+  /**
+   * @ingroup model
+   */
   Vector2f operator*(const Vector2f& lhs, float rhs) {
     return { lhs.x * rhs, lhs.y * rhs };
   }
 
   // scalar multiplication and assignment
+  /**
+   * @ingroup model
+   */
   inline
   Vector2f& operator*=(Vector2f& lhs, float rhs) {
     lhs.x *= rhs;
@@ -90,12 +120,18 @@ namespace game {
   }
 
   // scalar division
+  /**
+   * @ingroup model
+   */
   inline
   Vector2f operator/(const Vector2f& lhs, float rhs) {
     return { lhs.x / rhs, lhs.y / rhs };
   }
 
   // scalar division and assignment
+  /**
+   * @ingroup model
+   */
   inline
   Vector2f& operator/=(Vector2f& lhs, float rhs) {
     lhs.x /= rhs;

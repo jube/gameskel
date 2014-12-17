@@ -30,6 +30,9 @@
 
 namespace game {
 
+  /**
+   * @ingroup base
+   */
   class Random {
   public:
     Random();

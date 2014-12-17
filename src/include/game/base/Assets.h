@@ -27,6 +27,9 @@
 
 namespace game {
 
+  /**
+   * @ingroup base
+   */
   class AssetManager {
   public:
     void addSearchDir(std::string path);

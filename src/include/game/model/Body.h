@@ -28,6 +28,9 @@
 
 namespace game {
 
+  /**
+   * @ingroup model
+   */
   struct Shape {
     enum Kind : uint32_t {
       CIRCLE = 0,
@@ -51,6 +54,9 @@ namespace game {
 
   struct Body;
 
+  /**
+   * @ingroup model
+   */
   struct Manifold {
     Body *a;
     Body *b;
@@ -58,6 +64,9 @@ namespace game {
     Vector2f normal;
   };
 
+  /**
+   * @ingroup model
+   */
   struct Body {
 
     enum Type {

@@ -24,6 +24,9 @@
 
 namespace game {
 
+  /**
+   * @ingroup model
+   */
   class Model {
   public:
     virtual ~Model();

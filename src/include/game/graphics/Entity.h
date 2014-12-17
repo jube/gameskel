@@ -26,6 +26,9 @@
 
 namespace game {
 
+  /**
+   * @ingroup graphics
+   */
   class Entity {
   public:
     virtual ~Entity();

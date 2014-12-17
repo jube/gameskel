@@ -27,6 +27,10 @@
 #include <game/model/Model.h>
 
 namespace game {
+
+  /**
+   * @ingroup model
+   */
   class World {
   public:
 

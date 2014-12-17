@@ -29,6 +29,10 @@
 #include <game/graphics/Entity.h>
 
 namespace game {
+
+  /**
+   * @ingroup graphics
+   */
   class Group {
   public:
 

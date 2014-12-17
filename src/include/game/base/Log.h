@@ -27,6 +27,9 @@
 #include <map>
 
 namespace game {
+  /**
+   * @ingroup base
+   */
   class Log {
   public:
 

@@ -30,6 +30,9 @@
 
 namespace game {
 
+  /**
+   * @ingroup model
+   */
   class Physics {
   public:
     typedef std::function<void(Body *, Body *)> CollisionCallback;

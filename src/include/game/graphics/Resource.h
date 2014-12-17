@@ -34,6 +34,9 @@
 
 namespace game {
 
+  /**
+   * @ingroup graphics
+   */
   template<typename T>
   class ResourceCache {
   public:
@@ -47,6 +50,9 @@ namespace game {
   extern template class ResourceCache<sf::SoundBuffer>;
   extern template class ResourceCache<sf::Texture>;
 
+  /**
+   * @ingroup graphics
+   */
   class ResourceManager : public AssetManager {
   public:
     sf::Font *getFont(const std::string& path);

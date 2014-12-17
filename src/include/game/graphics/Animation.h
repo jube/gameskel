@@ -29,6 +29,9 @@
 
 namespace game {
 
+  /**
+   * @ingroup graphics
+   */
   class Animation {
   public:
 
