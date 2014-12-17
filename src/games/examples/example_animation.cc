@@ -21,8 +21,6 @@
  */
 #include <cassert>
 
-#include <boost/filesystem.hpp>
-
 #include <SFML/Graphics.hpp>
 
 #include <game/graphics/Animation.h>
@@ -31,19 +29,17 @@
 
 #include "config.h"
 
-namespace fs = boost::filesystem;
-
 class Ninja : public game::Entity, public sf::Transformable {
 public:
   Ninja(game::ResourceManager& manager)
-    : m_texture_walking("walking") {
+    : m_animation("walking") {
     m_texture_idle = manager.getTexture("ninja/idle.png");
 
     auto ninja = manager.getTexture("ninja/spritesheet.png");
 
     for (int i = -4; i <= 3; ++i) {
       int start = (4 - (std::abs(i))) * 88; // each sprite is 88x88
-      m_texture_walking.addFrame({ ninja, { start, 0, 88, 88 }, 0.1f });
+      m_animation.addFrame({ ninja, { start, 0, 88, 88 }, 0.1f });
     }
   }
 
@@ -60,17 +56,17 @@ public:
       return;
     }
 
-    m_texture_walking.update(dt);
+    m_animation.update(dt);
   }
 
   virtual void render(sf::RenderWindow& window) {
     sf::Sprite sprite;
 
     if (m_walking) {
-      auto texture = m_texture_walking.currentTexture();
+      auto texture = m_animation.currentTexture();
       assert(texture);
       sprite.setTexture(*texture);
-      sprite.setTextureRect(m_texture_walking.currentTextureRect());
+      sprite.setTextureRect(m_animation.currentTextureRect());
     } else {
       sprite.setTexture(*m_texture_idle);
     }
@@ -83,36 +79,30 @@ public:
 private:
   bool m_walking = false;
   sf::Texture *m_texture_idle = nullptr;
-  game::Animation m_texture_walking;
+  game::Animation m_animation;
 };
 
 int main(int argc, char *argv[]) {
   // initialize
-  game::Group group;
 
   sf::RenderWindow window(sf::VideoMode(300, 200), "Animation (version " GAME_VERSION ")");
   window.setKeyRepeatEnabled(false);
 
   // load resources
-  fs::path bindir_path(argv[0]);
-  bindir_path = bindir_path.parent_path();
-  fs::path datadir_path = bindir_path / fs::path("../share/foo");
-
-  std::cout << "Path: " << datadir_path << std::endl;
 
   game::ResourceManager manager;
-
-  manager.addSearchDir(datadir_path.string());
   manager.addSearchDir(GAME_DATADIR);
 
   // add entities
 
+  game::Group group;
   Ninja ninja(manager);
   ninja.setPosition(106, 56);
 
   group.addEntity(ninja);
 
   // main loop
+
   sf::Clock clock;
 
   while (window.isOpen()) {
