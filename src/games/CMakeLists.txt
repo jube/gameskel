@@ -29,3 +29,5 @@ target_link_libraries(example_animation
   gamegraphics0
   ${Boost_LIBRARIES}
 )
+
+add_subdirectory(pong)
