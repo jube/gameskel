@@ -27,3 +27,10 @@ install(
   DIRECTORY "${CMAKE_SOURCE_DIR}/share/foo"
   DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/games"
 )
+
+find_package(Doxygen)
+
+if(DOXYGEN_FOUND)
+  configure_file("${CMAKE_SOURCE_DIR}/Doxyfile.cmake" "${CMAKE_BINARY_DIR}/Doxyfile" @ONLY)
+  add_custom_target(doc ${DOXYGEN_EXECUTABLE} "${CMAKE_BINARY_DIR}/Doxyfile")
+endif(DOXYGEN_FOUND)
