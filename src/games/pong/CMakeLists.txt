@@ -9,7 +9,6 @@ add_executable(pong
 target_link_libraries(pong
   gamebase0
   gamegraphics0
-  gamemodel0
 )
 
 install(
