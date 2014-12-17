@@ -23,10 +23,6 @@
 #define GAME_RANDOM_H
 
 #include <random>
-#include <functional>
-
-#include <SFML/System/Vector2.hpp>
-#include <SFML/Graphics/Color.hpp>
 
 namespace game {
 
