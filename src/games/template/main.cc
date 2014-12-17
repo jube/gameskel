@@ -25,14 +25,19 @@
 
 int main() {
   // initialize
-  game::Group group;
-  sf::RenderWindow window(sf::VideoMode(1024, 768), "Foo (version " GAME_VERSION ")");
+
+  static constexpr unsigned INITIAL_WIDTH = 1024;
+  static constexpr unsigned INITIAL_HEIGHT = 768;
+
+  sf::RenderWindow window(sf::VideoMode(INITIAL_WIDTH, INITIAL_HEIGHT), "Game template (version " GAME_VERSION ")");
   window.setKeyRepeatEnabled(false);
 
   // load resources
 
 
   // add entities
+
+  game::Group group;
 
 
   // main loop
