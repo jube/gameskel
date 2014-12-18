@@ -22,6 +22,7 @@
 #ifndef GAME_QUEUE_H
 #define GAME_QUEUE_H
 
+#include <condition_variable>
 #include <deque>
 #include <mutex>
 
@@ -34,7 +35,7 @@ namespace game {
   class Queue {
   public:
     bool poll(T& value) {
-      std::lock_guard<std::mutex> lock(m_mutex);
+      std::unique_lock<std::mutex> lock(m_mutex);
 
       if (m_queue.empty()) {
         return false;
@@ -46,17 +47,28 @@ namespace game {
     }
 
     void push(const T& value) {
-      std::lock_guard<std::mutex> lock(m_mutex);
+      std::unique_lock<std::mutex> lock(m_mutex);
       m_queue.push_back(value);
+      m_cond.notify_one();
     }
 
     void clear() {
-      std::lock_guard<std::mutex> lock(m_mutex);
+      std::unique_lock<std::mutex> lock(m_mutex);
       m_queue.clear();
+    }
+
+    void waitIfEmpty(float seconds) {
+      auto deadline = std::chrono::steady_clock::now() + std::chrono::duration<float>(seconds);
+
+      std::unique_lock<std::mutex> lock(m_mutex);
+      while (m_queue.empty() && std::chrono::steady_clock::now() < deadline) {
+        m_cond.wait_until(lock, deadline);
+      }
     }
 
   private:
     std::mutex m_mutex;
+    std::condition_variable m_cond;
     std::deque<T> m_queue;
   };
 
