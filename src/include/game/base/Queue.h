@@ -41,7 +41,8 @@ namespace game {
       }
 
       value = m_queue.front();
-      m_queue.pop();
+      m_queue.pop_front();
+      return true;
     }
 
     void push(const T& value) {
