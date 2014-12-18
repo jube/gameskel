@@ -25,7 +25,7 @@
 namespace game {
 
   /**
-   * @ingroup model
+   * @ingroup base
    */
   struct Vector2f {
     float x;
@@ -34,7 +34,7 @@ namespace game {
 
   // equality
   /**
-   * @ingroup model
+   * @ingroup base
    */
   inline
   bool operator==(const Vector2f& lhs, const Vector2f& rhs) {
@@ -43,7 +43,7 @@ namespace game {
 
   // unary minus
   /**
-   * @ingroup model
+   * @ingroup base
    */
   inline
   Vector2f operator-(const Vector2f& v) {
@@ -52,7 +52,7 @@ namespace game {
 
   // addition
   /**
-   * @ingroup model
+   * @ingroup base
    */
   inline
   Vector2f operator+(const Vector2f& lhs, const Vector2f& rhs) {
@@ -61,7 +61,7 @@ namespace game {
 
   // addition and assignment
   /**
-   * @ingroup model
+   * @ingroup base
    */
   inline
   Vector2f& operator+=(Vector2f& lhs, const Vector2f& rhs) {
@@ -72,7 +72,7 @@ namespace game {
 
   // substraction
   /**
-   * @ingroup model
+   * @ingroup base
    */
   inline
   Vector2f operator-(const Vector2f& lhs, const Vector2f& rhs) {
@@ -81,7 +81,7 @@ namespace game {
 
   // substraction and assignment
   /**
-   * @ingroup model
+   * @ingroup base
    */
   inline
   Vector2f& operator-=(Vector2f& lhs, const Vector2f& rhs) {
@@ -92,7 +92,7 @@ namespace game {
 
   // scalar multiplication (on left)
   /**
-   * @ingroup model
+   * @ingroup base
    */
   inline
   Vector2f operator*(float lhs, const Vector2f& rhs) {
@@ -102,7 +102,7 @@ namespace game {
   // scalar multiplication (on right)
   inline
   /**
-   * @ingroup model
+   * @ingroup base
    */
   Vector2f operator*(const Vector2f& lhs, float rhs) {
     return { lhs.x * rhs, lhs.y * rhs };
@@ -110,7 +110,7 @@ namespace game {
 
   // scalar multiplication and assignment
   /**
-   * @ingroup model
+   * @ingroup base
    */
   inline
   Vector2f& operator*=(Vector2f& lhs, float rhs) {
@@ -121,7 +121,7 @@ namespace game {
 
   // scalar division
   /**
-   * @ingroup model
+   * @ingroup base
    */
   inline
   Vector2f operator/(const Vector2f& lhs, float rhs) {
@@ -130,7 +130,7 @@ namespace game {
 
   // scalar division and assignment
   /**
-   * @ingroup model
+   * @ingroup base
    */
   inline
   Vector2f& operator/=(Vector2f& lhs, float rhs) {
