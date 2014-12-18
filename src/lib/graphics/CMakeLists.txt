@@ -2,7 +2,9 @@ include_directories(${Boost_INCLUDE_DIRS})
 include_directories(${SFML2_INCLUDE_DIRS})
 
 set(LIBGAMEGRAPHICS0_SRC
+  Action.cc
   Animation.cc
+  Control.cc
   Entity.cc
   Group.cc
   Resource.cc
