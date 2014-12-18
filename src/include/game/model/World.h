@@ -36,7 +36,7 @@ namespace game {
 
     void update(float dt);
 
-    void addModel(Model& e);
+    World& addModel(Model& e);
     Model *removeModel(Model *e);
 
   private:
