@@ -24,7 +24,7 @@
 
 #include <cstdint>
 
-#include <game/model/Vector.h>
+#include <game/base/Vector.h>
 
 namespace game {
 

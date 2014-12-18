@@ -22,8 +22,8 @@
 #ifndef SERVER_RACKET_H
 #define SERVER_RACKET_H
 
+#include <game/base/Vector.h>
 #include <game/model/Model.h>
-#include <game/model/Vector.h>
 
 class ServerRacket : public game::Model {
 public:

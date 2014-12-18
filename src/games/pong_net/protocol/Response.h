@@ -26,7 +26,7 @@
 
 #include <SFML/Network.hpp>
 
-#include <game/model/Vector.h>
+#include <game/base/Vector.h>
 
 enum class ResponseType : uint16_t {
   PLAYER = 1,

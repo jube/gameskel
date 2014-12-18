@@ -22,8 +22,8 @@
 #ifndef CLIENT_RACKET_H
 #define CLIENT_RACKET_H
 
+#include <game/base/Vector.h>
 #include <game/graphics/Entity.h>
-#include <game/model/Vector.h>
 
 class ClientRacket : public game::Entity {
 public:

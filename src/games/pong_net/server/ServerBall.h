@@ -22,8 +22,8 @@
 #ifndef SERVER_BALL_H
 #define SERVER_BALL_H
 
+#include <game/base/Vector.h>
 #include <game/model/Model.h>
-#include <game/model/Vector.h>
 
 class ServerBall : public game::Model {
 public:

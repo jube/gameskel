@@ -22,8 +22,8 @@
 #ifndef CLIENT_BALL_H
 #define CLIENT_BALL_H
 
+#include <game/base/Vector.h>
 #include <game/graphics/Entity.h>
-#include <game/model/Vector.h>
 
 class ClientBall : public game::Entity {
 public:
