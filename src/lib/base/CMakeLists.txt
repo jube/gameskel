@@ -2,6 +2,7 @@ include_directories(${Boost_INCLUDE_DIRS})
 
 set(LIBGAMEBASE0_SRC
   Assets.cc
+  Clock.cc
   Event.cc
   Log.cc
   Random.cc
@@ -12,6 +13,7 @@ add_library(gamebase0 SHARED
 )
 
 target_link_libraries(gamebase0
+  ${CMAKE_THREAD_LIBS_INIT}
   ${Boost_LIBRARIES}
 )
 
