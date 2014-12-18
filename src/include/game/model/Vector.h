@@ -19,8 +19,8 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
-#ifndef GAME_MODEL_H
-#define GAME_MODEL_H
+#ifndef GAME_VECTOR_H
+#define GAME_VECTOR_H
 
 namespace game {
 
@@ -142,4 +142,4 @@ namespace game {
 }
 
 
-#endif // GAME_MODEL_H
+#endif // GAME_VECTOR_H
