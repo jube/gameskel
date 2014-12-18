@@ -22,7 +22,6 @@
 #include "Rules.h"
 
 #include <cassert>
-#include <cstdio>
 
 Rules::Rules(const Racket& lft, const Racket& rgt, Ball& ball)
   : l(&lft), r(&rgt), b(&ball)
