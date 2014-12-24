@@ -61,6 +61,7 @@ namespace game {
       auto deadline = std::chrono::steady_clock::now() + std::chrono::duration<float>(seconds);
 
       std::unique_lock<std::mutex> lock(m_mutex);
+
       while (m_queue.empty() && std::chrono::steady_clock::now() < deadline) {
         m_cond.wait_until(lock, deadline);
       }

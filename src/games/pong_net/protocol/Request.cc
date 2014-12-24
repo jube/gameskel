@@ -59,9 +59,9 @@ sf::Packet& operator>>(sf::Packet& packet, Request& req) {
       req.move.dir = static_cast<Direction>(dir);
       break;
 
-    case RequestType::END:
-      break;
-    }
+      case RequestType::END:
+        break;
+      }
   }
 
   return packet;

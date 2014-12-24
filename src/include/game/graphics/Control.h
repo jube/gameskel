@@ -42,10 +42,9 @@ namespace game {
      * @param controller_name the name of the controller
      */
     Control(std::string name, std::string controller_name)
-    : m_name(std::move(name))
-    , m_controller_name(std::move(controller_name))
-    , m_active(false)
-    {
+      : m_name(std::move(name))
+      , m_controller_name(std::move(controller_name))
+      , m_active(false) {
     }
 
     /**

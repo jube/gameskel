@@ -44,9 +44,9 @@ public:
   virtual void update(float dt) override;
 
 private:
-  const ServerRacket * const l;
-  const ServerRacket * const r;
-  ServerBall * const b;
+  const ServerRacket *const l;
+  const ServerRacket *const r;
+  ServerBall *const b;
   uint32_t m_l_points;
   uint32_t m_r_points;
 };

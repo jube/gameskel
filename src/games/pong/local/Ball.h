@@ -34,8 +34,7 @@ public:
   static constexpr float VELOCITY = 100.0f;
 
   Ball()
-    : m_pos({ 0.0f, 0.0f })
-    , m_velocity(VELOCITY, 0.0f) {
+    : m_pos({ 0.0f, 0.0f }), m_velocity(VELOCITY, 0.0f) {
   }
 
   const sf::Vector2f& getPosition() const {

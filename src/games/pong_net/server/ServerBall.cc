@@ -28,8 +28,8 @@
 
 ServerBall::ServerBall()
   : m_step(0)
-  , m_pos{0.0f, 0.0f}
-  , m_velocity{- CommonBall::VELOCITY, 0.0f} {
+  , m_pos {0.0f, 0.0f}
+, m_velocity { - CommonBall::VELOCITY, 0.0f} {
 }
 
 void ServerBall::update(float dt) {

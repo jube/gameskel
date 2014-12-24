@@ -30,12 +30,14 @@ void Racket::update(float dt) {
       if (m_pos.y > - (Ground::HEIGHT - HEIGHT) / 2) {
         m_pos.y -= VELOCITY * dt;
       }
+
       break;
 
     case Move::DOWN:
       if (m_pos.y < (Ground::HEIGHT - HEIGHT) / 2) {
         m_pos.y += VELOCITY * dt;
       }
+
       break;
 
     case Move::STOP:

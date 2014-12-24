@@ -29,8 +29,8 @@
 ServerRacket::ServerRacket(Location loc)
   : m_step(0)
   , m_move(Move::STOP)
-  , m_pos{ loc == Location::LEFT ? - CommonRacket::POSITION : CommonRacket::POSITION, 0.0f }
-  , m_velocity{0.0f, 0.0f} {
+  , m_pos { loc == Location::LEFT ? - CommonRacket::POSITION : CommonRacket::POSITION, 0.0f }
+, m_velocity {0.0f, 0.0f} {
 }
 
 void ServerRacket::update(float dt) {

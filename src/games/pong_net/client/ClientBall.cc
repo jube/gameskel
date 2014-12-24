@@ -37,6 +37,7 @@ void ClientBall::update(float dt) {
   m_pos += m_velocity * dt;
 
 #if 1
+
   if (m_pos.y > Y_LIMIT) {
     m_velocity.y = -m_velocity.y;
     m_pos.y = Y_LIMIT;
@@ -46,6 +47,7 @@ void ClientBall::update(float dt) {
     m_velocity.y = -m_velocity.y;
     m_pos.y = - Y_LIMIT;
   }
+
 #endif
 }
 

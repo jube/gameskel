@@ -38,9 +38,9 @@ public:
   virtual void render(sf::RenderWindow& window) override;
 
 private:
-  const Racket * const l;
-  const Racket * const r;
-  Ball * const b;
+  const Racket *const l;
+  const Racket *const r;
+  Ball *const b;
   unsigned m_l_points;
   unsigned m_r_points;
 };

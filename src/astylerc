@@ -42,4 +42,5 @@ exclude=share
 exclude=astylerc
 exclude=CMakeLists.txt
 exclude=CPackConfig.cmake
+exclude=Doxyfile.cmake
 formatted

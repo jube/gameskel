@@ -38,11 +38,10 @@ namespace game {
   }
 
   GamepadAxisControl::GamepadAxisControl(unsigned int id, sf::Joystick::Axis axis, Direction dir)
-  : Control("gamepad (axis)", axisName(axis))
-  , m_id(id)
-  , m_axis(axis)
-  , m_dir(dir)
-  {
+    : Control("gamepad (axis)", axisName(axis))
+    , m_id(id)
+    , m_axis(axis)
+    , m_dir(dir) {
   }
 
   void GamepadAxisControl::update(const sf::Event& event) {
@@ -62,10 +61,9 @@ namespace game {
   // gamepad button control
 
   GamepadButtonControl::GamepadButtonControl(unsigned int id, unsigned int button)
-  : Control("gamepad (button)", std::to_string(button))
-  , m_id(id)
-  , m_button(button)
-  {
+    : Control("gamepad (button)", std::to_string(button))
+    , m_id(id)
+    , m_button(button) {
   }
 
   void GamepadButtonControl::update(const sf::Event& event) {
@@ -90,9 +88,8 @@ namespace game {
   }
 
   KeyControl::KeyControl(sf::Keyboard::Key key)
-  : Control("keyboard", keyName(key))
-  , m_key(key)
-  {
+    : Control("keyboard", keyName(key))
+    , m_key(key) {
 
   }
 
@@ -118,9 +115,8 @@ namespace game {
   }
 
   MouseButtonControl::MouseButtonControl(sf::Mouse::Button button)
-  : Control("mouse", buttonName(button))
-  , m_button(button)
-  {
+    : Control("mouse", buttonName(button))
+    , m_button(button) {
   }
 
   void MouseButtonControl::update(const sf::Event& event) {
@@ -141,8 +137,7 @@ namespace game {
   // close control
 
   CloseControl::CloseControl()
-  : Control("window", "close")
-  {
+    : Control("window", "close") {
   }
 
   void CloseControl::update(const sf::Event& event) {

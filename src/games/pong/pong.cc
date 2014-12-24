@@ -123,7 +123,7 @@ int main() {
             break;
         }
 
-      } else if(event.type == sf::Event::KeyReleased) {
+      } else if (event.type == sf::Event::KeyReleased) {
 
         switch (event.key.code) {
           case sf::Keyboard::S:

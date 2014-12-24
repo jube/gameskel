@@ -141,12 +141,14 @@ int main(int argc, char *argv[]) {
   // set signal handlers
 
   auto previous_sigint_handler = std::signal(SIGINT, signal_handler);
+
   if (previous_sigint_handler == SIG_ERR) {
     game::Log::error(game::Log::GENERAL, "Could not set the signal handler for SIGINT\n");
     return EXIT_FAILURE;
   }
 
   auto previous_sigterm_handler = std::signal(SIGTERM, signal_handler);
+
   if (previous_sigterm_handler == SIG_ERR) {
     game::Log::error(game::Log::GENERAL, "Could not set the signal handler for SIGTERM\n");
     return EXIT_FAILURE;
@@ -239,7 +241,7 @@ int main(int argc, char *argv[]) {
             break;
         }
 
-      } else if(event.type == sf::Event::KeyReleased) {
+      } else if (event.type == sf::Event::KeyReleased) {
 
         switch (event.key.code) {
           case sf::Keyboard::Up:

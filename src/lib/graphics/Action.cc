@@ -26,9 +26,8 @@
 namespace game {
 
   Action::Action(std::string name)
-  : m_name(std::move(name))
-  , m_type(Type::INSTANTANEOUS)
-  {
+    : m_name(std::move(name))
+    , m_type(Type::INSTANTANEOUS) {
   }
 
   void Action::setContinuous() {

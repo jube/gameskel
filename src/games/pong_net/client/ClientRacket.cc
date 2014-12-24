@@ -26,7 +26,7 @@
 
 ClientRacket::ClientRacket(Location loc)
   : m_pos({ loc == Location::LEFT ? - CommonRacket::POSITION : CommonRacket::POSITION, 0.0f })
-  , m_velocity(0.0f, 0.0f) {
+, m_velocity(0.0f, 0.0f) {
 }
 
 void ClientRacket::fixState(const game::Vector2f& pos, game::Vector2f& velocity) {
@@ -42,6 +42,7 @@ void ClientRacket::update(float dt) {
   m_pos += m_velocity * dt;
 
 #if 1
+
   if (m_pos.y > Y_LIMIT) {
     m_pos.y = Y_LIMIT;
   }
@@ -49,6 +50,7 @@ void ClientRacket::update(float dt) {
   if (m_pos.y < - Y_LIMIT) {
     m_pos.y = - Y_LIMIT;
   }
+
 #endif
 }
 

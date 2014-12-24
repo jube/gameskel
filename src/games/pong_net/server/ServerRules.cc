@@ -61,7 +61,7 @@ void ServerRules::update(float dt) {
       float angle = computeNewAngle(*b, *r);
       velocity.x = std::cos(PI - angle) * CommonBall::VELOCITY;
       velocity.y = std::sin(PI - angle) * CommonBall::VELOCITY;
-//       velocity.x = -velocity.x;
+      //       velocity.x = -velocity.x;
     }
 
     if (position.x > X_LIMIT) {
@@ -74,7 +74,7 @@ void ServerRules::update(float dt) {
       float angle = computeNewAngle(*b, *l);
       velocity.x = std::cos(angle) * CommonBall::VELOCITY;
       velocity.y = std::sin(angle) * CommonBall::VELOCITY;
-//       velocity.x = -velocity.x;
+      //       velocity.x = -velocity.x;
     }
 
     if (position.x < - X_LIMIT) {

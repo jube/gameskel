@@ -136,12 +136,14 @@ int main() {
   // set signal handlers
 
   auto previous_sigint_handler = std::signal(SIGINT, signal_handler);
+
   if (previous_sigint_handler == SIG_ERR) {
     game::Log::error(game::Log::GENERAL, "Could not set the signal handler for SIGINT\n");
     return EXIT_FAILURE;
   }
 
   auto previous_sigterm_handler = std::signal(SIGTERM, signal_handler);
+
   if (previous_sigterm_handler == SIG_ERR) {
     game::Log::error(game::Log::GENERAL, "Could not set the signal handler for SIGTERM\n");
     return EXIT_FAILURE;
@@ -255,11 +257,11 @@ int main() {
     sf::Packet packet;
     packet << rep;
 
-    for (auto& player: players) {
+    for (auto& player : players) {
       socket.send(packet, player.remote.address, player.remote.port);
     }
 
-//     std::printf("FPS: %f\n", 1 / elapsed.asSeconds());
+    //     std::printf("FPS: %f\n", 1 / elapsed.asSeconds());
 
     queue.waitIfEmpty(0.01f - elapsed.asSeconds());
   }
