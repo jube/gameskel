@@ -19,8 +19,8 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
-#ifndef GAME_ASSETS_H
-#define GAME_ASSETS_H
+#ifndef GAME_CLOCK_H
+#define GAME_CLOCK_H
 
 #include <chrono>
 
@@ -58,4 +58,4 @@ namespace game {
 
 }
 
-#endif // GAME_ASSETS_H
+#endif // GAME_CLOCK_H
