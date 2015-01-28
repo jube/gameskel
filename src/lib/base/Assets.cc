@@ -25,6 +25,8 @@
 
 #include <boost/filesystem.hpp>
 
+#include <game/base/Log.h>
+
 namespace fs = boost::filesystem;
 
 namespace game {
@@ -40,11 +42,12 @@ namespace game {
       fs::path absolute_path = base / file;
 
       if (fs::is_regular_file(absolute_path)) {
-        std::clog << "Found a resource file: " << absolute_path << std::endl;
+        Log::info(Log::RESOURCES, "Found a resource file: %s\n", absolute_path.string().c_str());
         return absolute_path.string();
       }
     }
 
+    Log::error(Log::RESOURCES, "Could not find the following file: %s\n", relative_path.c_str());
     return std::string();
   }
 

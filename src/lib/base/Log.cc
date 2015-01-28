@@ -29,9 +29,10 @@ namespace game {
   // default values
   std::map<Log::Category, Log::Level> Log::s_levels = {
     { Log::GENERAL, Log::WARN },
-    { Log::RENDER, Log::WARN },
+    { Log::GRAPHICS, Log::WARN },
     { Log::NETWORK, Log::WARN },
     { Log::PHYSICS, Log::WARN },
+    { Log::RESOURCES, Log::WARN },
   };
 
   void Log::setLevel(Level level) {
@@ -71,14 +72,17 @@ namespace game {
       case Log::GENERAL:
         return "GENERAL";
 
-      case Log::RENDER:
-        return "RENDER";
+      case Log::GRAPHICS:
+        return "GRAPHICS";
 
       case Log::NETWORK:
         return "NETWORK";
 
       case Log::PHYSICS:
         return "PHYSICS";
+
+      case Log::RESOURCES:
+        return "RESOURCES";
     }
 
     assert(false);

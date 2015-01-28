@@ -79,7 +79,6 @@ namespace game {
     auto absolute_path = getAbsolutePath(path);
 
     if (absolute_path.empty()) {
-      std::cerr << "Error! Could not find the following file: " << path << std::endl;
       return nullptr;
     }
 

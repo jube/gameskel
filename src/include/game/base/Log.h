@@ -44,9 +44,10 @@ namespace game {
 
     enum Category : int {
       GENERAL,
-      RENDER,
+      GRAPHICS,
       NETWORK,
       PHYSICS,
+      RESOURCES,
     };
 
     static void setLevel(Level level);
