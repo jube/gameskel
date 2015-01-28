@@ -40,6 +40,11 @@ namespace game {
 
     float computeNormalFloat(float mean, float stddev);
 
+    /*
+     * true with a probability of p.
+     */
+    bool computeBernoulli(float p);
+
   private:
     std::mt19937 m_engine;
   };

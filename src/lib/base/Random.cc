@@ -51,4 +51,8 @@ namespace game {
     return dist(m_engine);
   }
 
+  bool Random::computeBernoulli(float p) {
+    std::bernoulli_distribution dist(p);
+    return dist(m_engine);
+  }
 }
