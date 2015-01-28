@@ -88,7 +88,7 @@ namespace game {
     void registerHandler(R T::*pm, T *obj) {
       static_assert(std::is_base_of<Event, E>::value, "E must be an Event");
       static_assert(E::type != INVALID_EVENT, "E must define its type");
-      registerHandler(E::type, std::bind(pm, obj));
+      registerHandler(E::type, std::bind(pm, obj, std::placeholders::_1, std::placeholders::_2));
     }
 
     void triggerEvent(EventType type, Event *event);
