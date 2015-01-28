@@ -94,7 +94,7 @@ namespace game {
   }
 
   void KeyControl::update(const sf::Event& event) {
-    if (event.type == sf::Event:: KeyPressed) {
+    if (event.type == sf::Event::KeyPressed) {
       if (event.key.code == m_key) {
         setActive();
       }
