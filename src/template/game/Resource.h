@@ -30,7 +30,7 @@
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Audio/SoundBuffer.hpp>
 
-#include <game/base/Assets.h>
+#include "Assets.h"
 
 namespace game {
 

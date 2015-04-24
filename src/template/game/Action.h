@@ -25,7 +25,7 @@
 #include <memory>
 #include <vector>
 
-#include <game/graphics/Control.h>
+#include "Control.h"
 
 namespace game {
 

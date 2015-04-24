@@ -19,12 +19,12 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
-#include <game/model/Body.h>
+#include "Body.h"
 
 #include <cassert>
 #include <cmath>
 
-#include <game/base/Log.h>
+#include "Log.h"
 
 namespace game {
 

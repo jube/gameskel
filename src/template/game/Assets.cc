@@ -19,13 +19,13 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
-#include <game/base/Assets.h>
+#include "Assets.h"
 
 #include <cassert>
 
 #include <boost/filesystem.hpp>
 
-#include <game/base/Log.h>
+#include "Log.h"
 
 namespace fs = boost::filesystem;
 

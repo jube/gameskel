@@ -24,7 +24,7 @@
 
 #include <vector>
 
-#include <game/model/Model.h>
+#include "Model.h"
 
 namespace game {
 

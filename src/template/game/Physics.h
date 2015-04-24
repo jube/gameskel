@@ -26,7 +26,7 @@
 #include <map>
 #include <vector>
 
-#include <game/model/Body.h>
+#include "Body.h"
 
 namespace game {
 

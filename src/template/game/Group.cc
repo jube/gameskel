@@ -19,7 +19,7 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
-#include <game/graphics/Group.h>
+#include "Group.h"
 
 #include <cassert>
 #include <algorithm>

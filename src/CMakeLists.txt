@@ -17,7 +17,7 @@ add_definitions(-std=c++11)
 
 include_directories("${CMAKE_SOURCE_DIR}/include")
 
-# add_subdirectory(lib)
+add_subdirectory(template)
 # add_subdirectory(games)
 
 install(

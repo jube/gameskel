@@ -26,7 +26,7 @@
 
 #include <SFML/Graphics.hpp>
 
-#include <game/graphics/Entity.h>
+#include "Entity.h"
 
 namespace game {
 
