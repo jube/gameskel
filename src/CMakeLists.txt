@@ -1,8 +1,10 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.0)
 
-project(GAME)
+project(GAME
+  VERSION 0.1.0
+  LANGUAGES C CXX
+)
 
-include(CPackConfig.cmake)
 include(GNUInstallDirs)
 
 find_package(Threads)
@@ -15,15 +17,7 @@ pkg_check_modules(SFML2_NETWORK REQUIRED sfml-network>=2.1)
 add_definitions(-Wall -g -O2)
 add_definitions(-std=c++11)
 
-include_directories("${CMAKE_SOURCE_DIR}/include")
-
 add_subdirectory(template)
-# add_subdirectory(games)
-
-install(
-  DIRECTORY "${CMAKE_SOURCE_DIR}/include/game"
-  DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
-)
 
 install(
   DIRECTORY "${CMAKE_SOURCE_DIR}/share/foo"
