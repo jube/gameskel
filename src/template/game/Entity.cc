@@ -26,10 +26,6 @@ namespace game {
   Entity::~Entity() {
   }
 
-  int Entity::priority() const {
-    return 0;
-  }
-
   void Entity::update(float dt) {
     // default: do nothing
   }

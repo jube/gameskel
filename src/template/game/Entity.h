@@ -31,13 +31,32 @@ namespace game {
    */
   class Entity {
   public:
+    Entity(int priority = 0)
+    : m_priority(priority)
+    , m_alive(true)
+    {
+    }
+
     virtual ~Entity();
 
-    virtual int priority() const;
+    int priority() const {
+      return m_priority;
+    }
+
+    bool isAlive() const {
+      return m_alive;
+    }
+
+    void kill() {
+      m_alive = false;
+    }
 
     virtual void update(float dt);
     virtual void render(sf::RenderWindow& window);
 
+  private:
+    const int m_priority;
+    bool m_alive;
   };
 
 }
