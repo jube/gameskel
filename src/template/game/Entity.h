@@ -39,7 +39,7 @@ namespace game {
 
     virtual ~Entity();
 
-    int priority() const {
+    int getPriority() const {
       return m_priority;
     }
 
