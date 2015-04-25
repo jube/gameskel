@@ -27,13 +27,13 @@
 
 namespace game {
 
-  void Animation::addFrame(const Frame& frame) {
+  void Animation::addFrame(sf::Texture *texture, const sf::IntRect& bounds, float duration) {
     if (m_frames.empty()) {
-      m_current_duration_in_frame = frame.duration;
+      m_current_duration_in_frame = duration;
       m_current_frame = 0;
     }
 
-    m_frames.push_back(frame);
+    m_frames.push_back({ texture, bounds, duration });
   }
 
   void Animation::update(float dt) {
