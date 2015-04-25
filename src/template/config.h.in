@@ -2,6 +2,6 @@
 #define CONFIG_H
 
 #define GAME_VERSION "@PROJECT_VERSION@"
-#define GAME_DATADIR "@CMAKE_INSTALL_PREFIX@/share/games/foo"
+#define GAME_DATADIR "@CMAKE_INSTALL_PREFIX@/share/games/mygame"
 
 #endif // CONFIG_H

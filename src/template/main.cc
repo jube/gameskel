@@ -24,10 +24,14 @@
 #include "game/Action.h"
 #include "game/Clock.h"
 #include "game/Group.h"
+#include "game/Log.h"
+#include "game/Resource.h"
 
 #include "config.h"
 
 int main(int argc, char *argv[]) {
+  game::Log::setLevel(game::Log::INFO);
+
   // initialize
 
   static constexpr unsigned INITIAL_WIDTH = 1024;
@@ -37,7 +41,8 @@ int main(int argc, char *argv[]) {
   window.setKeyRepeatEnabled(false);
 
   // load resources
-
+  game::ResourceManager resources;
+  resources.addSearchDir(GAME_DATADIR);
 
   // add entities
 

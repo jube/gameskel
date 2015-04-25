@@ -32,6 +32,7 @@ namespace fs = boost::filesystem;
 namespace game {
 
   void AssetManager::addSearchDir(std::string path) {
+    Log::info(Log::RESOURCES, "Added a new search directory: %s\n", path.c_str());
     m_searchdirs.emplace_back(std::move(path));
   }
 
