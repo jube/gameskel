@@ -35,13 +35,13 @@ namespace game {
    */
   class Physics {
   public:
-    typedef std::function<void(Body *, Body *)> CollisionCallback;
+    typedef std::function<void(Body&, Body&)> CollisionCallback;
 
-    void addBody(Body *body);
+    void addBody(Body& body);
     void clear();
 
-    void setCallback(Body *body, CollisionCallback callback);
-    void removeCallback(Body *body);
+    void setCallback(Body& body, CollisionCallback callback);
+    void removeCallback(Body& body);
 
     void update(float dt);
 

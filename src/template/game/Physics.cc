@@ -22,6 +22,7 @@
 #include "Physics.h"
 
 #include <cassert>
+#include <memory>
 
 #include "Log.h"
 
@@ -70,14 +71,14 @@ namespace game {
     m.b->pos += b_inverse_mass * correction;
   }
 
-  void Physics::addBody(Body *body) {
-    switch (body->type) {
+  void Physics::addBody(Body& body) {
+    switch (body.type) {
       case Body::DYNAMIC:
-        m_dynamic_bodies.push_back(body);
+        m_dynamic_bodies.push_back(std::addressof(body));
         break;
 
       case Body::STATIC:
-        m_static_bodies.push_back(body);
+        m_static_bodies.push_back(std::addressof(body));
         break;
     }
   }
@@ -88,36 +89,35 @@ namespace game {
     m_callbacks.clear();
   }
 
-  void Physics::setCallback(Body *body, CollisionCallback callback) {
-    m_callbacks[body] = callback;
+  void Physics::setCallback(Body& body, CollisionCallback callback) {
+    m_callbacks[std::addressof(body)] = callback;
   }
 
-  void Physics::removeCallback(Body *body) {
-    m_callbacks.erase(body);
+  void Physics::removeCallback(Body& body) {
+    m_callbacks.erase(std::addressof(body));
   }
 
-  static void logBody(const Body& body) {
-    Log::debug(Log::PHYSICS, "- body %p\n", &body);
-    Log::debug(Log::PHYSICS, "\t(%f, %f) @ (%f, %f)\n", body.pos.x, body.pos.y, body.velocity.x, body.velocity.y);
+  static void logBody(const Body *body) {
+    Log::debug(Log::PHYSICS, "- body %p\n", body);
+    Log::debug(Log::PHYSICS, "\t(%f, %f) @ (%f, %f)\n", body->pos.x, body->pos.y, body->velocity.x, body->velocity.y);
 
-    switch (body.shape.kind) {
+    switch (body->shape.kind) {
       case Shape::CIRCLE:
-        Log::debug(Log::PHYSICS, "\tcircle: %f\n", body.shape.circle.radius);
+        Log::debug(Log::PHYSICS, "\tcircle: %f\n", body->shape.circle.radius);
         break;
 
       case Shape::RECTANGLE:
-        Log::debug(Log::PHYSICS, "\trectangle: %f x %f\n", body.shape.rectangle.width, body.shape.rectangle.height);
+        Log::debug(Log::PHYSICS, "\trectangle: %f x %f\n", body->shape.rectangle.width, body->shape.rectangle.height);
         break;
     }
 
-    Log::debug(Log::PHYSICS, "\trestitution: %f\n", body.restitution);
+    Log::debug(Log::PHYSICS, "\trestitution: %f\n", body->restitution);
   }
 
   void Physics::update(float dt) {
     // speed simulation
     for (auto body : m_dynamic_bodies) {
-      body->pos.x += body->velocity.x * dt;
-      body->pos.y += body->velocity.y * dt;
+      body->pos += body->velocity * dt;
     }
 
     // collision resolution
@@ -145,8 +145,8 @@ namespace game {
           m.b = other_body;
           manifolds.push_back(m);
           Log::debug(Log::PHYSICS, "Collision detected!\n");
-          logBody(*body);
-          logBody(*other_body);
+          logBody(body);
+          logBody(other_body);
           Log::debug(Log::PHYSICS, "Manifold: %f (%f, %f)\n", m.penetration, m.normal.x, m.normal.y);
         }
       }
@@ -156,8 +156,8 @@ namespace game {
           m.b = other_body;
           manifolds.push_back(m);
           Log::debug(Log::PHYSICS, "Collision detected!\n");
-          logBody(*body);
-          logBody(*other_body);
+          logBody(body);
+          logBody(other_body);
           Log::debug(Log::PHYSICS, "Manifold: %f (%f, %f)\n", m.penetration, m.normal.x, m.normal.y);
         }
       }
@@ -166,15 +166,15 @@ namespace game {
     for (auto& m : manifolds) {
       resolveCollision(m);
       Log::debug(Log::PHYSICS, "After collision resolution:\n");
-      logBody(*m.a);
-      logBody(*m.b);
+      logBody(m.a);
+      logBody(m.b);
     }
 
     for (auto& m : manifolds) {
       correctPosition(m);
       Log::debug(Log::PHYSICS, "After position correction:\n");
-      logBody(*m.a);
-      logBody(*m.b);
+      logBody(m.a);
+      logBody(m.b);
     }
 
     for (auto& m : manifolds) {
@@ -182,14 +182,14 @@ namespace game {
 
       if (it != m_callbacks.end()) {
         assert(it->second);
-        it->second(m.a, m.b);
+        it->second(*m.a, *m.b);
       }
 
       it = m_callbacks.find(m.b);
 
       if (it != m_callbacks.end()) {
         assert(it->second);
-        it->second(m.b, m.a);
+        it->second(*m.b, *m.a);
       }
     }
   }
