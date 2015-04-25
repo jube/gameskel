@@ -49,7 +49,6 @@ namespace game {
     void push(const T& value) {
       std::unique_lock<std::mutex> lock(m_mutex);
       m_queue.push_back(value);
-      m_cond.notify_one();
     }
 
     void clear() {
@@ -57,19 +56,8 @@ namespace game {
       m_queue.clear();
     }
 
-    void waitIfEmpty(float seconds) {
-      auto deadline = std::chrono::steady_clock::now() + std::chrono::duration<float>(seconds);
-
-      std::unique_lock<std::mutex> lock(m_mutex);
-
-      while (m_queue.empty() && std::chrono::steady_clock::now() < deadline) {
-        m_cond.wait_until(lock, deadline);
-      }
-    }
-
   private:
     std::mutex m_mutex;
-    std::condition_variable m_cond;
     std::deque<T> m_queue;
   };
 
