@@ -22,6 +22,7 @@
 #ifndef GAME_CLOCK_H
 #define GAME_CLOCK_H
 
+#include <cstdint>
 #include <chrono>
 
 namespace game {
@@ -34,6 +35,8 @@ namespace game {
     Time();
 
     float asSeconds() const;
+    int32_t asMilliseconds() const;
+    int64_t asMicroseconds() const;
 
   private:
     friend class Clock;
@@ -50,6 +53,7 @@ namespace game {
   public:
     Clock();
 
+    Time getElapsedTime() const;
     Time restart();
 
   private:

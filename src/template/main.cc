@@ -19,6 +19,8 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
+#include <cstdio>
+
 #include "game/Action.h"
 #include "game/Clock.h"
 #include "game/Group.h"
