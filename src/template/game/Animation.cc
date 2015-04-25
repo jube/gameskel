@@ -28,6 +28,11 @@
 namespace game {
 
   void Animation::addFrame(sf::Texture *texture, const sf::IntRect& bounds, float duration) {
+    if (texture == nullptr) {
+      Log::error(Log::GRAPHICS, "The frame does not have any texture: %s\n", m_name.c_str());
+      return;
+    }
+
     if (m_frames.empty()) {
       m_current_duration_in_frame = duration;
       m_current_frame = 0;
@@ -49,22 +54,16 @@ namespace game {
     }
   }
 
-  sf::Texture *Animation::getCurrentTexture() {
+  void Animation::renderAt(sf::RenderWindow& window, const sf::Vector2f& position) const {
     if (m_frames.empty()) {
       Log::error(Log::GRAPHICS, "The animation does not have any frame: %s\n", m_name.c_str());
-      return nullptr;
+      return;
     }
 
-    return m_frames[m_current_frame].texture;
-  }
-
-  sf::IntRect Animation::getCurrentTextureRect() {
-    if (m_frames.empty()) {
-      Log::error(Log::GRAPHICS, "The animation does not have any frame: %s\n", m_name.c_str());
-      return sf::IntRect();
-    }
-
-    return m_frames[m_current_frame].bounds;
+    const Frame& frame = m_frames[m_current_frame];
+    sf::Sprite sprite(*frame.texture, frame.bounds);
+    sprite.setPosition(position);
+    window.draw(sprite);
   }
 
 }

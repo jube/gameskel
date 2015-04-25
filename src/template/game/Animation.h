@@ -24,8 +24,7 @@
 
 #include <vector>
 
-#include <SFML/Graphics/Texture.hpp>
-#include <SFML/Graphics/Rect.hpp>
+#include <SFML/Graphics.hpp>
 
 namespace game {
 
@@ -46,9 +45,7 @@ namespace game {
     void addFrame(sf::Texture *texture, const sf::IntRect& bounds, float duration);
 
     void update(float dt);
-
-    sf::Texture *getCurrentTexture();
-    sf::IntRect getCurrentTextureRect();
+    void renderAt(sf::RenderWindow& window, const sf::Vector2f& position) const;
 
   private:
     struct Frame {
