@@ -45,7 +45,7 @@ namespace game {
       : m_name(std::move(name)) {
     }
 
-    const std::string& name() {
+    const std::string& getName() {
       return m_name;
     }
 
@@ -53,8 +53,8 @@ namespace game {
 
     void update(float dt);
 
-    sf::Texture *currentTexture();
-    sf::IntRect currentTextureRect();
+    sf::Texture *getCurrentTexture();
+    sf::IntRect getCurrentTextureRect();
 
   private:
     std::string m_name;

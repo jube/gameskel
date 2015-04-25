@@ -23,6 +23,8 @@
 
 #include <iostream>
 
+#include "Log.h"
+
 namespace game {
 
   void Animation::addFrame(const Frame& frame) {
@@ -47,18 +49,18 @@ namespace game {
     }
   }
 
-  sf::Texture *Animation::currentTexture() {
+  sf::Texture *Animation::getCurrentTexture() {
     if (m_frames.empty()) {
-      std::cerr << "Error! The animation does not have any frame: " << name() << std::endl;
+      Log::error(Log::GRAPHICS, "The animation does not have any frame: %s\n", m_name.c_str());
       return nullptr;
     }
 
     return m_frames[m_current_frame].texture;
   }
 
-  sf::IntRect Animation::currentTextureRect() {
+  sf::IntRect Animation::getCurrentTextureRect() {
     if (m_frames.empty()) {
-      std::cerr << "Error! The animation does not have any frame: " << name() << std::endl;
+      Log::error(Log::GRAPHICS, "The animation does not have any frame: %s\n", m_name.c_str());
       return sf::IntRect();
     }
 
