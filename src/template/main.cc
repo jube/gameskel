@@ -25,7 +25,7 @@
 #include "game/Clock.h"
 #include "game/Group.h"
 #include "game/Log.h"
-#include "game/Resource.h"
+#include "game/Resources.h"
 
 #include "config.h"
 

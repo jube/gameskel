@@ -18,7 +18,7 @@ add_executable(game_template
   game/Control.cc
   game/Entity.cc
   game/Group.cc
-  game/Resource.cc
+  game/Resources.cc
   # model
   game/Body.cc
   game/Model.cc
