@@ -39,6 +39,10 @@ namespace game {
   std::string AssetManager::getAbsolutePath(const std::string& relative_path) {
     fs::path file(relative_path);
 
+    if (file.is_absolute()) {
+      return relative_path;
+    }
+
     for (fs::path base : m_searchdirs) {
       fs::path absolute_path = base / file;
 
