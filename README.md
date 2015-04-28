@@ -30,6 +30,9 @@ Finally, you can install the files (you may need root permissions):
 
     make install
 
+## How to use
+
+The best way to use this skel is to copy the game directory in your tree.
 
 ## Authors
 
