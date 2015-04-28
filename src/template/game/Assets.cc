@@ -40,6 +40,8 @@ namespace game {
     fs::path file(relative_path);
 
     if (file.is_absolute()) {
+      assert(fs::is_regular_file(file));
+      Log::info(Log::RESOURCES, "Found a resource file: %s\n", relative_path.c_str());
       return relative_path;
     }
 
