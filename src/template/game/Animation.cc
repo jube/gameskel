@@ -54,7 +54,7 @@ namespace game {
     }
   }
 
-  void Animation::renderAt(sf::RenderWindow& window, const sf::Vector2f& position) const {
+  void Animation::renderAt(sf::RenderWindow& window, const sf::Vector2f& position, float angle) const {
     if (m_frames.empty()) {
       Log::error(Log::GRAPHICS, "The animation does not have any frame: %s\n", m_name.c_str());
       return;
@@ -62,7 +62,12 @@ namespace game {
 
     const Frame& frame = m_frames[m_current_frame];
     sf::Sprite sprite(*frame.texture, frame.bounds);
+
+    sf::FloatRect bounds = sprite.getLocalBounds();
+    sprite.setOrigin(bounds.width * 0.5, bounds.height * 0.5);
+
     sprite.setPosition(position);
+    sprite.setRotation(angle);
     window.draw(sprite);
   }
 
