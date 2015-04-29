@@ -26,28 +26,15 @@
 #include <map>
 #include <vector>
 
+#include "Id.h"
+
 namespace game {
   /**
    * @ingroup base
    */
-  typedef uint64_t EventType;
+  typedef Id EventType;
 
-#define INVALID_EVENT 0
-
-  /**
-   * @ingroup base
-   */
-  constexpr EventType Hash(const char *str, std::size_t sz) {
-    return sz == 0 ? 0xcbf29ce484222325 : (str[0] ^ Hash(str + 1, sz - 1)) * 0x100000001b3;
-  }
-
-  /**
-   * @ingroup base
-   */
-  inline EventType Hash(const std::string& str) {
-    return Hash(str.c_str(), str.size());
-  }
-
+#define INVALID_EVENT INVALID_ID
 
   /**
    * @ingroup base
@@ -107,7 +94,7 @@ namespace game {
 }
 
 constexpr game::EventType operator"" _type(const char *str, std::size_t sz) {
-  return game::Hash(str, sz);
+  return game::Hash(str, sz, sz);
 }
 
 #endif // GAME_EVENT_H
