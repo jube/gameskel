@@ -37,27 +37,21 @@ namespace game {
   /**
    * @ingroup graphics
    */
-  template<typename T>
-  class ResourceCache {
-  public:
-    T *findResource(const std::string& key);
-    T *loadResource(const std::string& key, const std::string& path);
-  private:
-    std::map<std::string, std::unique_ptr<T>> m_cache;
-  };
-
-  extern template class ResourceCache<sf::Font>;
-  extern template class ResourceCache<sf::SoundBuffer>;
-  extern template class ResourceCache<sf::Texture>;
-
-  /**
-   * @ingroup graphics
-   */
   class ResourceManager : public AssetManager {
   public:
     sf::Font *getFont(const std::string& path);
     sf::SoundBuffer *getSoundBuffer(const std::string& path);
     sf::Texture *getTexture(const std::string& path);
+
+  private:
+    template<typename T>
+    class ResourceCache {
+    public:
+      T *findResource(const std::string& key);
+      T *loadResource(const std::string& key, const std::string& path);
+    private:
+      std::map<std::string, std::unique_ptr<T>> m_cache;
+    };
 
   private:
     ResourceCache<sf::Font> m_fonts;

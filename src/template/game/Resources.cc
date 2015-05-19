@@ -28,7 +28,7 @@ namespace fs = boost::filesystem;
 namespace game {
 
   template<typename T>
-  T *ResourceCache<T>::findResource(const std::string& key) {
+  T *ResourceManager::ResourceCache<T>::findResource(const std::string& key) {
     auto it = m_cache.find(key);
 
     if (it != m_cache.end()) {
@@ -39,7 +39,7 @@ namespace game {
   }
 
   template<typename T>
-  T *ResourceCache<T>::loadResource(const std::string& key, const std::string& path) {
+  T *ResourceManager::ResourceCache<T>::loadResource(const std::string& key, const std::string& path) {
     std::unique_ptr<T> obj(new T);
 
     bool loaded = obj->loadFromFile(path);
@@ -50,11 +50,6 @@ namespace game {
 
     return inserted.first->second.get();
   }
-
-  template class ResourceCache<sf::Font>;
-  template class ResourceCache<sf::SoundBuffer>;
-  template class ResourceCache<sf::Texture>;
-
 
   sf::Font *ResourceManager::getFont(const std::string& path) {
     return getResource(path, m_fonts);
