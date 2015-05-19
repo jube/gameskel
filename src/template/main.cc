@@ -49,7 +49,7 @@ int main(int argc, char *argv[]) {
   game::Group group;
 
   // add actions
-  game::ActionSet actions;
+  game::ActionManager actions;
 
   auto closeWindowAction = std::make_shared<game::Action>("Close window");
   closeWindowAction->addCloseControl();

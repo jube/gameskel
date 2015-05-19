@@ -193,7 +193,7 @@ namespace game {
    *
    * @ingroup graphics
    */
-  class ActionSet {
+  class ActionManager {
   public:
     /**
      * @brief Add an action.
