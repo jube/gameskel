@@ -19,7 +19,7 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
-#include "World.h"
+#include "EntityManager.h"
 
 #include <cassert>
 #include <algorithm>
@@ -27,22 +27,37 @@
 
 namespace game {
 
-  void World::update(float dt) {
-    for (auto model : m_models) {
-      model->update(dt);
+  void EntityManager::update(float dt) {
+    // erase-remove idiom
+    m_entities.erase(std::remove_if(m_entities.begin(), m_entities.end(), [](const Entity *e) {
+      return !e->isAlive();
+    }), m_entities.end());
+
+    std::sort(m_entities.begin(), m_entities.end(), [](const Entity * e1, const Entity * e2) {
+      return e1->getPriority() < e2->getPriority();
+    });
+
+    for (auto entity : m_entities) {
+      entity->update(dt);
     }
   }
 
-  void World::addModel(Model& e) {
-    m_models.push_back(&e);
+  void EntityManager::render(sf::RenderWindow& window) {
+    for (auto entity : m_entities) {
+      entity->render(window);
+    }
   }
 
-  Model *World::removeModel(Model *e) {
-    // erase-remove idiom
-    auto it = std::remove(m_models.begin(), m_models.end(), e);
+  void EntityManager::addEntity(Entity& e) {
+    m_entities.push_back(&e);
+  }
 
-    if (it != m_models.end()) {
-      m_models.erase(it, m_models.end());
+  Entity *EntityManager::removeEntity(Entity *e) {
+    // erase-remove idiom
+    auto it = std::remove(m_entities.begin(), m_entities.end(), e);
+
+    if (it != m_entities.end()) {
+      m_entities.erase(it, m_entities.end());
       return e;
     }
 

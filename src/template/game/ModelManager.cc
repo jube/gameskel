@@ -19,32 +19,34 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
-#ifndef GAME_WORLD_H
-#define GAME_WORLD_H
+#include "ModelManager.h"
 
-#include <vector>
-
-#include "Model.h"
+#include <cassert>
+#include <algorithm>
+#include <memory>
 
 namespace game {
 
-  /**
-   * @ingroup model
-   */
-  class World {
-  public:
+  void ModelManager::update(float dt) {
+    for (auto model : m_models) {
+      model->update(dt);
+    }
+  }
 
-    void update(float dt);
+  void ModelManager::addModel(Model& e) {
+    m_models.push_back(&e);
+  }
 
-    void addModel(Model& e);
-    Model *removeModel(Model *e);
+  Model *ModelManager::removeModel(Model *e) {
+    // erase-remove idiom
+    auto it = std::remove(m_models.begin(), m_models.end(), e);
 
-  private:
-    std::vector<Model *> m_models;
-  };
+    if (it != m_models.end()) {
+      m_models.erase(it, m_models.end());
+      return e;
+    }
 
+    return nullptr;
+  }
 
 }
-
-
-#endif // GAME_WORLD_H

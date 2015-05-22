@@ -17,11 +17,11 @@ add_executable(game_template
   game/Animation.cc
   game/Control.cc
   game/Entity.cc
-  game/Group.cc
+  game/EntityManager.cc
   game/Resources.cc
   # model
   game/Model.cc
-  game/World.cc
+  game/ModelManager.cc
 )
 
 target_link_libraries(game_template

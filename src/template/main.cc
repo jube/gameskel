@@ -23,7 +23,7 @@
 
 #include "game/Action.h"
 #include "game/Clock.h"
-#include "game/Group.h"
+#include "game/EntityManager.h"
 #include "game/Log.h"
 #include "game/Resources.h"
 
@@ -46,7 +46,7 @@ int main(int argc, char *argv[]) {
 
   // add entities
 
-  game::Group group;
+  game::EntityManager entities;
 
   // add actions
   game::ActionManager actions;
@@ -73,11 +73,11 @@ int main(int argc, char *argv[]) {
 
     // update
     auto elapsed = clock.restart();
-    group.update(elapsed.asSeconds());
+    entities.update(elapsed.asSeconds());
 
     // render
     window.clear(sf::Color::White);
-    group.render(window);
+    entities.render(window);
     window.display();
   }
 

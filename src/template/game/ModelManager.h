@@ -19,35 +19,32 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
-#ifndef GAME_GROUP_H
-#define GAME_GROUP_H
+#ifndef GAME_MODEL_MANAGER_H
+#define GAME_MODEL_MANAGER_H
 
 #include <vector>
 
-#include <SFML/Graphics.hpp>
-
-#include "Entity.h"
+#include "Model.h"
 
 namespace game {
 
   /**
-   * @ingroup graphics
+   * @ingroup model
    */
-  class Group {
+  class ModelManager {
   public:
 
     void update(float dt);
-    void render(sf::RenderWindow& window);
 
-    void addEntity(Entity& e);
-    Entity *removeEntity(Entity *e);
+    void addModel(Model& e);
+    Model *removeModel(Model *e);
 
   private:
-    std::vector<Entity *> m_entities;
+    std::vector<Model *> m_models;
   };
 
 
 }
 
 
-#endif // GAME_GROUP_H
+#endif // GAME_MODEL_MANAGER_H
