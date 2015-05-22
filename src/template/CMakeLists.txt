@@ -20,9 +20,7 @@ add_executable(game_template
   game/Group.cc
   game/Resources.cc
   # model
-  game/Body.cc
   game/Model.cc
-  game/Physics.cc
   game/World.cc
 )
 
