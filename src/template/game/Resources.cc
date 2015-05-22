@@ -28,7 +28,7 @@ namespace fs = boost::filesystem;
 namespace game {
 
   template<typename T>
-  T *ResourceManager::ResourceCache<T>::findResource(const std::string& key) {
+  T *ResourceManager::ResourceCache<T>::findResource(const boost::filesystem::path& key) {
     auto it = m_cache.find(key);
 
     if (it != m_cache.end()) {
@@ -39,10 +39,10 @@ namespace game {
   }
 
   template<typename T>
-  T *ResourceManager::ResourceCache<T>::loadResource(const std::string& key, const std::string& path) {
+  T *ResourceManager::ResourceCache<T>::loadResource(const boost::filesystem::path& key, const boost::filesystem::path& path) {
     std::unique_ptr<T> obj(new T);
 
-    bool loaded = obj->loadFromFile(path);
+    bool loaded = obj->loadFromFile(path.string());
     assert(loaded);
 
     auto inserted = m_cache.emplace(key, std::move(obj));
@@ -51,20 +51,20 @@ namespace game {
     return inserted.first->second.get();
   }
 
-  sf::Font *ResourceManager::getFont(const std::string& path) {
+  sf::Font *ResourceManager::getFont(const boost::filesystem::path& path) {
     return getResource(path, m_fonts);
   }
 
-  sf::SoundBuffer *ResourceManager::getSoundBuffer(const std::string& path) {
+  sf::SoundBuffer *ResourceManager::getSoundBuffer(const boost::filesystem::path& path) {
     return getResource(path, m_sounds);
   }
 
-  sf::Texture *ResourceManager::getTexture(const std::string& path) {
+  sf::Texture *ResourceManager::getTexture(const boost::filesystem::path& path) {
     return getResource(path, m_textures);
   }
 
   template<typename T>
-  T *ResourceManager::getResource(const std::string& path, ResourceCache<T>& cache) {
+  T *ResourceManager::getResource(const boost::filesystem::path& path, ResourceCache<T>& cache) {
     auto res = cache.findResource(path);
 
     if (res != nullptr) {

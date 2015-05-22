@@ -25,6 +25,8 @@
 #include <string>
 #include <vector>
 
+#include <boost/filesystem.hpp>
+
 namespace game {
 
   /**
@@ -32,12 +34,12 @@ namespace game {
    */
   class AssetManager {
   public:
-    void addSearchDir(std::string path);
+    void addSearchDir(boost::filesystem::path path);
 
-    std::string getAbsolutePath(const std::string& relative_path);
+    boost::filesystem::path getAbsolutePath(const boost::filesystem::path& relative_path);
 
   private:
-    std::vector<std::string> m_searchdirs;
+    std::vector<boost::filesystem::path> m_searchdirs;
   };
 
 }

@@ -39,18 +39,18 @@ namespace game {
    */
   class ResourceManager : public AssetManager {
   public:
-    sf::Font *getFont(const std::string& path);
-    sf::SoundBuffer *getSoundBuffer(const std::string& path);
-    sf::Texture *getTexture(const std::string& path);
+    sf::Font *getFont(const boost::filesystem::path& path);
+    sf::SoundBuffer *getSoundBuffer(const boost::filesystem::path& path);
+    sf::Texture *getTexture(const boost::filesystem::path& path);
 
   private:
     template<typename T>
     class ResourceCache {
     public:
-      T *findResource(const std::string& key);
-      T *loadResource(const std::string& key, const std::string& path);
+      T *findResource(const boost::filesystem::path& key);
+      T *loadResource(const boost::filesystem::path& key, const boost::filesystem::path& path);
     private:
-      std::map<std::string, std::unique_ptr<T>> m_cache;
+      std::map<boost::filesystem::path, std::unique_ptr<T>> m_cache;
     };
 
   private:
@@ -60,7 +60,7 @@ namespace game {
 
   private:
     template<typename T>
-    T *getResource(const std::string& path, ResourceCache<T>& cache);
+    T *getResource(const boost::filesystem::path& path, ResourceCache<T>& cache);
   };
 
 }
