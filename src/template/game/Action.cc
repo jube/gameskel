@@ -99,8 +99,8 @@ namespace game {
 
   // ActionManager
 
-  void ActionManager::addAction(std::shared_ptr<Action> action) {
-    m_actions.push_back(action);
+  void ActionManager::addAction(Action& action) {
+    m_actions.push_back(&action);
   }
 
   void ActionManager::update(const sf::Event& event) {

@@ -94,9 +94,9 @@ int main(int argc, char *argv[]) {
   // add actions
   game::ActionManager actions;
 
-  auto closeWindowAction = std::make_shared<game::Action>("Close window");
-  closeWindowAction->addCloseControl();
-  closeWindowAction->addKeyControl(sf::Keyboard::Escape);
+  game::Action closeWindowAction("Close window");
+  closeWindowAction.addCloseControl();
+  closeWindowAction.addKeyControl(sf::Keyboard::Escape);
   actions.addAction(closeWindowAction);
 
   // add entities
@@ -121,7 +121,7 @@ int main(int argc, char *argv[]) {
       cameras.update(event);
     }
 
-    if (closeWindowAction->isActive()) {
+    if (closeWindowAction.isActive()) {
       window.close();
     }
 
