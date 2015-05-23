@@ -54,7 +54,7 @@ public:
   }
 
   virtual void render(sf::RenderWindow& window) override {
-    sf::Vector2f pos = m_camera.transform({ -70.0f, -70.0f });
+    sf::Vector2f pos = m_camera.transform({ -74.0f, -74.0f });
 
     sf::RectangleShape shape({ 64, 64 });
     shape.setPosition(pos);
