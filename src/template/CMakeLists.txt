@@ -15,6 +15,7 @@ add_executable(game_template
   # graphics
   game/Action.cc
   game/Animation.cc
+  game/Camera.cc
   game/Control.cc
   game/Entity.cc
   game/EntityManager.cc
