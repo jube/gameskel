@@ -19,6 +19,7 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
+#include <cassert>
 #include <cstdio>
 
 #include "game/Action.h"
@@ -27,6 +28,7 @@
 #include "game/EntityManager.h"
 #include "game/Log.h"
 #include "game/Resources.h"
+#include "game/WindowSettings.h"
 
 #include "config.h"
 
@@ -66,7 +68,6 @@ private:
   game::HeadsUpCamera& m_camera;
 };
 
-
 int main(int argc, char *argv[]) {
   game::Log::setLevel(game::Log::INFO);
 
@@ -75,7 +76,10 @@ int main(int argc, char *argv[]) {
   static constexpr unsigned INITIAL_WIDTH = 1024;
   static constexpr unsigned INITIAL_HEIGHT = 576;
 
-  sf::RenderWindow window(sf::VideoMode(INITIAL_WIDTH, INITIAL_HEIGHT), "Game template (version " GAME_VERSION ")");
+  game::WindowSettings settings(INITIAL_WIDTH, INITIAL_HEIGHT, "Game template (version " GAME_VERSION ")");
+
+  sf::RenderWindow window;
+  settings.applyTo(window);
   window.setKeyRepeatEnabled(false);
 
   // load resources
@@ -99,6 +103,10 @@ int main(int argc, char *argv[]) {
   closeWindowAction.addKeyControl(sf::Keyboard::Escape);
   actions.addAction(closeWindowAction);
 
+  game::Action fullscreenAction("Fullscreen");
+  fullscreenAction.addKeyControl(sf::Keyboard::F);
+  actions.addAction(fullscreenAction);
+
   // add entities
 
   game::EntityManager mainEntities;
@@ -117,12 +125,29 @@ int main(int argc, char *argv[]) {
     sf::Event event;
 
     while (window.pollEvent(event)) {
+      if (event.type == sf::Event::Resized) {
+        std::printf("Resized: %ux%u\n", event.size.width, event.size.height);
+      }
+
       actions.update(event);
       cameras.update(event);
     }
 
     if (closeWindowAction.isActive()) {
       window.close();
+    }
+
+    if (fullscreenAction.isActive()) {
+      settings.toggleFullscreen();
+      settings.applyTo(window);
+      auto sz = window.getSize();
+
+      // fake resize event (not sent when going fullscreen)
+      sf::Event event;
+      event.type = sf::Event::Resized;
+      event.size.width = sz.x;
+      event.size.height = sz.y;
+      cameras.update(event);
     }
 
     // update
@@ -141,6 +166,8 @@ int main(int argc, char *argv[]) {
     hudEntities.render(window);
 
     window.display();
+
+    actions.reset();
   }
 
   return 0;
