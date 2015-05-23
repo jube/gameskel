@@ -85,11 +85,11 @@ int main(int argc, char *argv[]) {
   // add cameras
   game::CameraManager cameras;
 
-  game::FixedRatioCamera main_camera(2.0f, SIZE);
-  cameras.addCamera(main_camera);
+  game::FixedRatioCamera mainCamera(2.0f, SIZE);
+  cameras.addCamera(mainCamera);
 
-  game::HeadsUpCamera hud_camera(window);
-  cameras.addCamera(hud_camera);
+  game::HeadsUpCamera hudCamera(window);
+  cameras.addCamera(hudCamera);
 
   // add actions
   game::ActionManager actions;
@@ -101,13 +101,13 @@ int main(int argc, char *argv[]) {
 
   // add entities
 
-  game::EntityManager main_entities;
+  game::EntityManager mainEntities;
   Background bg;
-  main_entities.addEntity(bg);
+  mainEntities.addEntity(bg);
 
-  game::EntityManager hud_entities;
-  Minimap map(hud_camera);
-  hud_entities.addEntity(map);
+  game::EntityManager hudEntities;
+  Minimap map(hudCamera);
+  hudEntities.addEntity(map);
 
   // main loop
   game::Clock clock;
@@ -127,17 +127,18 @@ int main(int argc, char *argv[]) {
 
     // update
     auto elapsed = clock.restart();
-    main_entities.update(elapsed.asSeconds());
-    hud_entities.update(elapsed.asSeconds());
+    auto dt = elapsed.asSeconds();
+    mainEntities.update(dt);
+    hudEntities.update(dt);
 
     // render
     window.clear(sf::Color::White);
 
-    main_camera.configure(window);
-    main_entities.render(window);
+    mainCamera.configure(window);
+    mainEntities.render(window);
 
-    hud_camera.configure(window);
-    hud_entities.render(window);
+    hudCamera.configure(window);
+    hudEntities.render(window);
 
     window.display();
   }
