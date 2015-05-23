@@ -193,14 +193,14 @@ namespace game {
    *
    * @ingroup graphics
    */
-  class ActionSet {
+  class ActionManager {
   public:
     /**
      * @brief Add an action.
      *
      * @param action the action to add to the set.
      */
-    void addAction(std::shared_ptr<Action> action);
+    void addAction(Action& action);
 
     /**
      * @brief Update all the actions.
@@ -219,7 +219,7 @@ namespace game {
     void reset();
 
   private:
-    std::vector<std::shared_ptr<Action>> m_actions;
+    std::vector<Action*> m_actions;
   };
 
 }

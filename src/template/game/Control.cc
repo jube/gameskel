@@ -47,11 +47,13 @@ namespace game {
   void GamepadAxisControl::update(const sf::Event& event) {
     if (event.type == sf::Event::JoystickMoved) {
       if (event.joystickMove.joystickId == m_id && event.joystickMove.axis == m_axis) {
-        if (m_dir == Direction::POSITIVE) {
-          setActive(event.joystickMove.position > 50.0f);
-        } else {
-          assert(m_dir == Direction::NEGATIVE);
-          setActive(event.joystickMove.position < -50.0f);
+        switch (m_dir) {
+          case Direction::POSITIVE:
+            setActive(event.joystickMove.position > 50.0f);
+            break;
+          case Direction::NEGATIVE:
+            setActive(event.joystickMove.position < -50.0f);
+            break;
         }
       }
     }

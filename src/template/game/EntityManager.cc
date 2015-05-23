@@ -19,39 +19,49 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
-#ifndef GAME_PHYSICS_H
-#define GAME_PHYSICS_H
+#include "EntityManager.h"
 
-#include <functional>
-#include <map>
-#include <vector>
-
-#include "Body.h"
+#include <cassert>
+#include <algorithm>
+#include <memory>
 
 namespace game {
 
-  /**
-   * @ingroup model
-   */
-  class Physics {
-  public:
-    typedef std::function<void(Body&, Body&)> CollisionCallback;
+  void EntityManager::update(float dt) {
+    // erase-remove idiom
+    m_entities.erase(std::remove_if(m_entities.begin(), m_entities.end(), [](const Entity *e) {
+      return !e->isAlive();
+    }), m_entities.end());
 
-    void addBody(Body& body);
-    void clear();
+    std::sort(m_entities.begin(), m_entities.end(), [](const Entity * e1, const Entity * e2) {
+      return e1->getPriority() < e2->getPriority();
+    });
 
-    void setCallback(Body& body, CollisionCallback callback);
-    void removeCallback(Body& body);
+    for (auto entity : m_entities) {
+      entity->update(dt);
+    }
+  }
 
-    void update(float dt);
+  void EntityManager::render(sf::RenderWindow& window) {
+    for (auto entity : m_entities) {
+      entity->render(window);
+    }
+  }
 
-  private:
-    std::vector<Body *> m_dynamic_bodies;
-    std::vector<Body *> m_static_bodies;
+  void EntityManager::addEntity(Entity& e) {
+    m_entities.push_back(&e);
+  }
 
-    std::map<Body *, CollisionCallback> m_callbacks;
-  };
+  Entity *EntityManager::removeEntity(Entity *e) {
+    // erase-remove idiom
+    auto it = std::remove(m_entities.begin(), m_entities.end(), e);
+
+    if (it != m_entities.end()) {
+      m_entities.erase(it, m_entities.end());
+      return e;
+    }
+
+    return nullptr;
+  }
 
 }
-
-#endif // GAME_PHYSICS_H

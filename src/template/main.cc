@@ -22,12 +22,50 @@
 #include <cstdio>
 
 #include "game/Action.h"
+#include "game/Camera.h"
 #include "game/Clock.h"
-#include "game/Group.h"
+#include "game/EntityManager.h"
 #include "game/Log.h"
-#include "game/Resource.h"
+#include "game/Resources.h"
 
 #include "config.h"
+
+static constexpr float SIZE = 100.0f;
+
+class Background : public game::Entity {
+public:
+
+  virtual void render(sf::RenderWindow& window) override {
+    sf::RectangleShape shape({ SIZE, SIZE / 2 });
+    shape.setOrigin(SIZE / 2, SIZE / 4);
+    shape.setPosition(0.0f, 0.0f);
+    shape.setFillColor(sf::Color(0xCC, 0xCC, 0xCC));
+    window.draw(shape);
+  }
+
+};
+
+class Minimap : public game::Entity {
+public:
+  Minimap(game::HeadsUpCamera& camera)
+  : m_camera(camera)
+  {
+
+  }
+
+  virtual void render(sf::RenderWindow& window) override {
+    sf::Vector2f pos = m_camera.transform({ -74.0f, -74.0f });
+
+    sf::RectangleShape shape({ 64, 64 });
+    shape.setPosition(pos);
+    shape.setFillColor(sf::Color(0xCC, 0x00, 0x00));
+    window.draw(shape);
+  }
+
+private:
+  game::HeadsUpCamera& m_camera;
+};
+
 
 int main(int argc, char *argv[]) {
   game::Log::setLevel(game::Log::INFO);
@@ -35,7 +73,7 @@ int main(int argc, char *argv[]) {
   // initialize
 
   static constexpr unsigned INITIAL_WIDTH = 1024;
-  static constexpr unsigned INITIAL_HEIGHT = 768;
+  static constexpr unsigned INITIAL_HEIGHT = 576;
 
   sf::RenderWindow window(sf::VideoMode(INITIAL_WIDTH, INITIAL_HEIGHT), "Game template (version " GAME_VERSION ")");
   window.setKeyRepeatEnabled(false);
@@ -44,17 +82,32 @@ int main(int argc, char *argv[]) {
   game::ResourceManager resources;
   resources.addSearchDir(GAME_DATADIR);
 
-  // add entities
+  // add cameras
+  game::CameraManager cameras;
 
-  game::Group group;
+  game::FixedRatioCamera mainCamera(2.0f, SIZE);
+  cameras.addCamera(mainCamera);
+
+  game::HeadsUpCamera hudCamera(window);
+  cameras.addCamera(hudCamera);
 
   // add actions
-  game::ActionSet actions;
+  game::ActionManager actions;
 
-  auto closeWindowAction = std::make_shared<game::Action>("Close window");
-  closeWindowAction->addCloseControl();
-  closeWindowAction->addKeyControl(sf::Keyboard::Escape);
+  game::Action closeWindowAction("Close window");
+  closeWindowAction.addCloseControl();
+  closeWindowAction.addKeyControl(sf::Keyboard::Escape);
   actions.addAction(closeWindowAction);
+
+  // add entities
+
+  game::EntityManager mainEntities;
+  Background bg;
+  mainEntities.addEntity(bg);
+
+  game::EntityManager hudEntities;
+  Minimap map(hudCamera);
+  hudEntities.addEntity(map);
 
   // main loop
   game::Clock clock;
@@ -65,19 +118,28 @@ int main(int argc, char *argv[]) {
 
     while (window.pollEvent(event)) {
       actions.update(event);
+      cameras.update(event);
     }
 
-    if (closeWindowAction->isActive()) {
+    if (closeWindowAction.isActive()) {
       window.close();
     }
 
     // update
     auto elapsed = clock.restart();
-    group.update(elapsed.asSeconds());
+    auto dt = elapsed.asSeconds();
+    mainEntities.update(dt);
+    hudEntities.update(dt);
 
     // render
     window.clear(sf::Color::White);
-    group.render(window);
+
+    mainCamera.configure(window);
+    mainEntities.render(window);
+
+    hudCamera.configure(window);
+    hudEntities.render(window);
+
     window.display();
   }
 

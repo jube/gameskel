@@ -15,15 +15,14 @@ add_executable(game_template
   # graphics
   game/Action.cc
   game/Animation.cc
+  game/Camera.cc
   game/Control.cc
   game/Entity.cc
-  game/Group.cc
-  game/Resource.cc
+  game/EntityManager.cc
+  game/Resources.cc
   # model
-  game/Body.cc
   game/Model.cc
-  game/Physics.cc
-  game/World.cc
+  game/ModelManager.cc
 )
 
 target_link_libraries(game_template

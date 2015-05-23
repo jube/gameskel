@@ -19,35 +19,50 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
-#ifndef GAME_GROUP_H
-#define GAME_GROUP_H
+#ifndef GAME_RESOURCE_H
+#define GAME_RESOURCE_H
 
-#include <vector>
+#include <string>
+#include <map>
+#include <memory>
 
-#include <SFML/Graphics.hpp>
+#include <SFML/Graphics/Texture.hpp>
+#include <SFML/Graphics/Font.hpp>
+#include <SFML/Audio/SoundBuffer.hpp>
 
-#include "Entity.h"
+#include "Assets.h"
 
 namespace game {
 
   /**
    * @ingroup graphics
    */
-  class Group {
+  class ResourceManager : public AssetManager {
   public:
-
-    void update(float dt);
-    void render(sf::RenderWindow& window);
-
-    void addEntity(Entity& e);
-    Entity *removeEntity(Entity *e);
+    sf::Font *getFont(const boost::filesystem::path& path);
+    sf::SoundBuffer *getSoundBuffer(const boost::filesystem::path& path);
+    sf::Texture *getTexture(const boost::filesystem::path& path);
 
   private:
-    std::vector<Entity *> m_entities;
-  };
+    template<typename T>
+    class ResourceCache {
+    public:
+      T *findResource(const boost::filesystem::path& key);
+      T *loadResource(const boost::filesystem::path& key, const boost::filesystem::path& path);
+    private:
+      std::map<boost::filesystem::path, std::unique_ptr<T>> m_cache;
+    };
 
+  private:
+    ResourceCache<sf::Font> m_fonts;
+    ResourceCache<sf::SoundBuffer> m_sounds;
+    ResourceCache<sf::Texture> m_textures;
+
+  private:
+    template<typename T>
+    T *getResource(const boost::filesystem::path& path, ResourceCache<T>& cache);
+  };
 
 }
 
-
-#endif // GAME_GROUP_H
+#endif // GAME_RESOURCE_H

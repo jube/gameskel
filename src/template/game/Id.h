@@ -19,34 +19,38 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
-#include "World.h"
-
-#include <cassert>
-#include <algorithm>
-#include <memory>
+#ifndef GAME_ID_H
+#define GAME_ID_H
 
 namespace game {
 
-  void World::update(float dt) {
-    for (auto model : m_models) {
-      model->update(dt);
-    }
+  /**
+   * @ingroup base
+   */
+  typedef uint64_t Id;
+
+#define INVALID_ID 0
+
+  /**
+   * @ingroup base
+   *
+   * The hash is a Fowler–Noll–Vo 1a hash.
+   */
+  constexpr Id Hash(const char *str, std::size_t sz, std::size_t idx) {
+    return idx == 0 ? 0xcbf29ce484222325 : (str[idx - 1] ^ Hash(str, sz, idx - 1)) * 0x100000001b3;
   }
 
-  void World::addModel(Model& e) {
-    m_models.push_back(&e);
-  }
-
-  Model *World::removeModel(Model *e) {
-    // erase-remove idiom
-    auto it = std::remove(m_models.begin(), m_models.end(), e);
-
-    if (it != m_models.end()) {
-      m_models.erase(it, m_models.end());
-      return e;
-    }
-
-    return nullptr;
+  /**
+   * @ingroup base
+   */
+  inline Id Hash(const std::string& str) {
+    return Hash(str.c_str(), str.size(), str.size());
   }
 
 }
+
+constexpr game::Id operator"" _id(const char *str, std::size_t sz) {
+  return game::Hash(str, sz, sz);
+}
+
+#endif // GAME_ID_H

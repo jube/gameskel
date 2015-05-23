@@ -97,19 +97,19 @@ namespace game {
     }
   }
 
-  // ActionSet
+  // ActionManager
 
-  void ActionSet::addAction(std::shared_ptr<Action> action) {
-    m_actions.push_back(action);
+  void ActionManager::addAction(Action& action) {
+    m_actions.push_back(&action);
   }
 
-  void ActionSet::update(const sf::Event& event) {
+  void ActionManager::update(const sf::Event& event) {
     for (auto action : m_actions) {
       action->update(event);
     }
   }
 
-  void ActionSet::reset() {
+  void ActionManager::reset() {
     for (auto action : m_actions) {
       action->reset();
     }

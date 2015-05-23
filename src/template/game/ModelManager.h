@@ -19,74 +19,32 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
-#ifndef GAME_BODY_H
-#define GAME_BODY_H
+#ifndef GAME_MODEL_MANAGER_H
+#define GAME_MODEL_MANAGER_H
 
-#include <cstdint>
+#include <vector>
 
-#include "Vector.h"
+#include "Model.h"
 
 namespace game {
 
   /**
    * @ingroup model
    */
-  struct Shape {
-    enum Kind : uint32_t {
-      CIRCLE = 0,
-      RECTANGLE = 1,
-    };
+  class ModelManager {
+  public:
 
-    Kind kind;
+    void update(float dt);
 
-    union {
+    void addModel(Model& e);
+    Model *removeModel(Model *e);
 
-      struct {
-        float radius;
-      } circle;
-
-      struct {
-        float width;
-        float height;
-      } rectangle;
-    };
+  private:
+    std::vector<Model *> m_models;
   };
 
-  struct Body;
-
-  /**
-   * @ingroup model
-   */
-  struct Manifold {
-    Body *a;
-    Body *b;
-    float penetration;
-    Vector2f normal;
-  };
-
-  /**
-   * @ingroup model
-   */
-  struct Body {
-
-    enum Type {
-      STATIC,
-      DYNAMIC,
-    };
-
-    Type type;
-    Vector2f pos; /**< center of the body */
-    Vector2f velocity;
-    Shape shape;
-    float inverse_mass;
-    float restitution;
-    uint32_t layers;
-
-    static constexpr uint32_t ALL_LAYERS = static_cast<uint32_t>(-1);
-
-    static bool collides(const Body& lhs, const Body& rhs, Manifold *m);
-  };
 
 }
 
-#endif // GAME_BODY_H
+
+#endif // GAME_MODEL_MANAGER_H
