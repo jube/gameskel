@@ -42,6 +42,12 @@ namespace game {
     void addEntity(Entity& e);
     Entity *removeEntity(Entity *e);
 
+    template<typename E>
+    E *removeTypedEntity(E *e) {
+      static_assert(std::is_base_of<Entity, E>::value, "E must be an Entity");
+      return static_cast<E*>(removeEntity(e));
+    }
+
   private:
     std::vector<Entity *> m_entities;
   };
