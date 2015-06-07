@@ -22,9 +22,13 @@
 #ifndef GAME_VECTOR_H
 #define GAME_VECTOR_H
 
+#include <cmath>
+
 namespace game {
 
   /**
+   * @brief A vector with two float components
+   *
    * @ingroup base
    */
   struct Vector2f {
@@ -32,8 +36,9 @@ namespace game {
     float y;
   };
 
-  // equality
   /**
+   * @brief Test vectors' equality
+   *
    * @ingroup base
    */
   inline
@@ -41,8 +46,19 @@ namespace game {
     return lhs.x == rhs.x && lhs.y == rhs.y;
   }
 
-  // unary minus
   /**
+   * @brief Test vectors' inequality
+   *
+   * @ingroup base
+   */
+  inline
+  bool operator!=(const Vector2f& lhs, const Vector2f& rhs) {
+    return lhs.x != rhs.x || lhs.y != rhs.y;
+  }
+
+  /**
+   * @brief Compute vector opposite
+   *
    * @ingroup base
    */
   inline
@@ -50,8 +66,9 @@ namespace game {
     return { - v.x, - v.y };
   }
 
-  // addition
   /**
+   * @brief Compute the addition of two vectors
+   *
    * @ingroup base
    */
   inline
@@ -59,8 +76,9 @@ namespace game {
     return { lhs.x + rhs.x, lhs.y + rhs.y };
   }
 
-  // addition and assignment
   /**
+   * @brief Compute the addition of two vectors and assign to the first
+   *
    * @ingroup base
    */
   inline
@@ -70,8 +88,9 @@ namespace game {
     return lhs;
   }
 
-  // substraction
   /**
+   * @brief Compute the substraction of two vectors
+   *
    * @ingroup base
    */
   inline
@@ -79,8 +98,9 @@ namespace game {
     return { lhs.x - rhs.x, lhs.y - rhs.y };
   }
 
-  // substraction and assignment
   /**
+   * @brief Compute the substraction of two vectors and assign to the first
+   *
    * @ingroup base
    */
   inline
@@ -90,8 +110,9 @@ namespace game {
     return lhs;
   }
 
-  // scalar multiplication (on left)
   /**
+   * @brief Compute the scalar left multiplication of a vector
+   *
    * @ingroup base
    */
   inline
@@ -99,28 +120,31 @@ namespace game {
     return { lhs * rhs.x, lhs * rhs.y };
   }
 
-  // scalar multiplication (on right)
-  inline
   /**
+   * @brief Compute the scalar right multiplication of a vector
+   *
    * @ingroup base
    */
+  inline
   Vector2f operator*(const Vector2f& lhs, float rhs) {
     return { lhs.x * rhs, lhs.y * rhs };
   }
 
-  // scalar multiplication and assignment
   /**
+   * @brief Compute the scalar multiplication of a vector and assign to the vector
+   *
    * @ingroup base
    */
   inline
   Vector2f& operator*=(Vector2f& lhs, float rhs) {
     lhs.x *= rhs;
-    lhs.x *= rhs;
+    lhs.y *= rhs;
     return lhs;
   }
 
-  // scalar division
   /**
+   * @brief Compute the scalar division of a vector
+   *
    * @ingroup base
    */
   inline
@@ -128,16 +152,99 @@ namespace game {
     return { lhs.x / rhs, lhs.y / rhs };
   }
 
-  // scalar division and assignment
   /**
+   * @brief Compute the scalar division of a vector and assign to the vector
+   *
    * @ingroup base
    */
   inline
   Vector2f& operator/=(Vector2f& lhs, float rhs) {
     lhs.x /= rhs;
-    lhs.x /= rhs;
+    lhs.y /= rhs;
     return lhs;
   }
+
+  /**
+   * @brief Compute the dot product of two vectors
+   *
+   * @ingroup base
+   */
+  inline
+  float dotProduct(const Vector2f& lhs, const Vector2f& rhs) {
+    return lhs.x * rhs.x + lhs.y * rhs.y;
+  }
+
+  /**
+   * @brief Compute the manhattan length of a vector
+   *
+   * @ingroup base
+   */
+  inline
+  float manhattanLength(const Vector2f& v) {
+    return std::abs(v.x) + std::abs(v.y);
+  }
+
+  /**
+   * @brief Compute the euclidean length of a vector
+   *
+   * @ingroup base
+   */
+  inline
+  float euclideanLength(const Vector2f& v) {
+    return std::hypot(v.x, v.y);
+  }
+
+  /**
+   * @brief Compute the chebyshev length of a vector
+   *
+   * @ingroup base
+   */
+  inline
+  float chebyshevLength(const Vector2f& v) {
+    return std::max(std::abs(v.x), std::abs(v.y));
+  }
+
+  /**
+   * @brief Compute the manhattan distance of two vectors
+   *
+   * @ingroup base
+   */
+  inline
+  float manhattanDistance(const Vector2f& lhs, const Vector2f& rhs) {
+    return manhattanLength(lhs - rhs);
+  }
+
+  /**
+   * @brief Compute the euclidean distance of two vectors
+   *
+   * @ingroup base
+   */
+  inline
+  float euclideanDistance(const Vector2f& lhs, const Vector2f& rhs) {
+    return euclideanLength(lhs - rhs);
+  }
+
+  /**
+   * @brief Compute the chebyshev distance of two vectors
+   *
+   * @ingroup base
+   */
+  inline
+  float chebyshevDistance(const Vector2f& lhs, const Vector2f& rhs) {
+    return chebyshevLength(lhs - rhs);
+  }
+
+  /**
+   * @brief Compute the dot product of two vectors
+   *
+   * @ingroup base
+   */
+  inline
+  float angle(const Vector2f& v) {
+    return std::atan2(v.y, v.x);
+  }
+
+
 
 }
 
