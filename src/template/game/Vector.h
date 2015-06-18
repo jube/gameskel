@@ -201,7 +201,7 @@ namespace game {
    */
   inline
   float chebyshevLength(const Vector2f& v) {
-    return std::max(std::abs(v.x), std::abs(v.y));
+    return std::fmax(std::abs(v.x), std::abs(v.y));
   }
 
   /**
@@ -240,11 +240,30 @@ namespace game {
    * @ingroup base
    */
   inline
-  float angle(const Vector2f& v) {
+  float vectorAngle(const Vector2f& v) {
     return std::atan2(v.y, v.x);
   }
 
+  /**
+   * @brief Compute the unit vector in the same direction as a vector
+   *
+   * @ingroup base
+   */
+  inline
+  Vector2f unit(const Vector2f& v) {
+    float n = euclideanLength(v);
+    return { v.x / n, v.y / n };
+  }
 
+  /**
+   * @brief Compute the unit vector with an angle
+   *
+   * @ingroup base
+   */
+  inline
+  Vector2f unit(float angle) {
+    return { std::cos(angle), std::sin(angle) };
+  }
 
 }
 
