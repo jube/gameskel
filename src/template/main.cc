@@ -125,10 +125,6 @@ int main(int argc, char *argv[]) {
     sf::Event event;
 
     while (window.pollEvent(event)) {
-      if (event.type == sf::Event::Resized) {
-        std::printf("Resized: %ux%u\n", event.size.width, event.size.height);
-      }
-
       actions.update(event);
       cameras.update(event);
     }
@@ -142,7 +138,7 @@ int main(int argc, char *argv[]) {
       settings.applyTo(window);
       auto sz = window.getSize();
 
-      // fake resize event (not sent when going fullscreen)
+      // fake resize event (not sent when going fullscreen before SFML 2.3.1)
       sf::Event event;
       event.type = sf::Event::Resized;
       event.size.width = sz.x;
