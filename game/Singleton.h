@@ -23,6 +23,7 @@
 #define GAME_SINGLETON_H
 
 #include <cassert>
+#include <utility>
 
 namespace game {
 
