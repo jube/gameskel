@@ -19,8 +19,8 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
-#ifndef GAME_RESOURCE_H
-#define GAME_RESOURCE_H
+#ifndef GAME_RESOURCE_MANAGER_H
+#define GAME_RESOURCE_MANAGER_H
 
 #include <string>
 #include <map>
@@ -30,7 +30,7 @@
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Audio/SoundBuffer.hpp>
 
-#include "Assets.h"
+#include "AssetManager.h"
 
 namespace game {
 
@@ -65,4 +65,4 @@ namespace game {
 
 }
 
-#endif // GAME_RESOURCE_H
+#endif // GAME_RESOURCE_MANAGER_H

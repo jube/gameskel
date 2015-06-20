@@ -19,7 +19,7 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
-#include "Resources.h"
+#include "ResourceManager.h"
 
 #include <boost/filesystem.hpp>
 

@@ -27,7 +27,7 @@
 #include "game/Clock.h"
 #include "game/EntityManager.h"
 #include "game/Log.h"
-#include "game/Resources.h"
+#include "game/ResourceManager.h"
 #include "game/WindowSettings.h"
 
 #include "config.h"
