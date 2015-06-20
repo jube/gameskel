@@ -80,13 +80,13 @@ namespace game {
   }
 
 
-  FullCamera::FullCamera(float width, const sf::Vector2f& center)
+  FlexibleCamera::FlexibleCamera(float width, const sf::Vector2f& center)
   : SceneCamera(width, center)
   {
 
   }
 
-  void FullCamera::update(sf::Event& event) {
+  void FlexibleCamera::update(sf::Event& event) {
     if (event.type != sf::Event::Resized) {
       return;
     }
@@ -99,7 +99,7 @@ namespace game {
     m_view.setSize(getWidth(), height);
   }
 
-  void FullCamera::configure(sf::RenderWindow& window) {
+  void FlexibleCamera::configure(sf::RenderWindow& window) {
     m_view.setCenter(getCenter());
     window.setView(m_view);
   }

@@ -95,9 +95,9 @@ namespace game {
   /**
    * @ingroup graphics
    */
-  class FullCamera : public SceneCamera {
+  class FlexibleCamera : public SceneCamera {
   public:
-    FullCamera(float width, const sf::Vector2f& center = sf::Vector2f(0.0f, 0.0f));
+    FlexibleCamera(float width, const sf::Vector2f& center = sf::Vector2f(0.0f, 0.0f));
     virtual void update(sf::Event& event) override;
     virtual void configure(sf::RenderWindow& window) override;
 
