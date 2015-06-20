@@ -73,6 +73,12 @@ namespace game {
 
     void removeHandler(EventHandlerId id);
 
+    void removeHandlers(std::initializer_list<EventHandlerId> ids) {
+      for (auto id : ids) {
+        removeHandler(id);
+      }
+    }
+
     void triggerEvent(EventType type, Event *event);
 
     template<typename E>
