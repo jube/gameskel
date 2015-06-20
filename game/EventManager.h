@@ -46,23 +46,29 @@ namespace game {
   /**
    * @ingroup base
    */
+  typedef uint64_t EventHandlerId;
+
+  /**
+   * @ingroup base
+   */
   class EventManager {
   public:
+    EventManager();
 
-    void registerHandler(EventType type, EventHandler handler);
+    EventHandlerId registerHandler(EventType type, EventHandler handler);
 
     template<typename E>
-    void registerHandler(EventHandler handler) {
+    EventHandlerId registerHandler(EventHandler handler) {
       static_assert(std::is_base_of<Event, E>::value, "E must be an Event");
       static_assert(E::type != INVALID_EVENT, "E must define its type");
-      registerHandler(E::type, handler);
+      return registerHandler(E::type, handler);
     }
 
     template<typename E, typename R, typename T>
-    void registerHandler(R T::*pm, T *obj) {
+    EventHandlerId registerHandler(R T::*pm, T *obj) {
       static_assert(std::is_base_of<Event, E>::value, "E must be an Event");
       static_assert(E::type != INVALID_EVENT, "E must define its type");
-      registerHandler(E::type, std::bind(pm, obj, std::placeholders::_1, std::placeholders::_2));
+      return registerHandler(E::type, std::bind(pm, obj, std::placeholders::_1, std::placeholders::_2));
     }
 
     void triggerEvent(EventType type, Event *event);
@@ -75,7 +81,13 @@ namespace game {
     }
 
   private:
-    std::map<EventType, std::vector<EventHandler>> m_handlers;
+    struct Handler {
+      EventHandlerId id;
+      EventHandler handler;
+    };
+
+    EventHandlerId m_current_id;
+    std::map<EventType, std::vector<Handler>> m_handlers;
   };
 
 }
