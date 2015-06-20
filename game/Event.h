@@ -22,9 +22,7 @@
 #ifndef GAME_EVENT_H
 #define GAME_EVENT_H
 
-#include <functional>
-#include <map>
-#include <vector>
+#include <string>
 
 #include "Id.h"
 
@@ -41,54 +39,6 @@ namespace game {
    */
   struct Event {
     static const EventType type = INVALID_EVENT;
-  };
-
-  /**
-   * @ingroup base
-   */
-  enum class EventStatus {
-    KEEP, /**< The handler must be kept */
-    DIE,  /**< The handler can be removed */
-  };
-
-  /**
-   * @ingroup base
-   */
-  typedef std::function<EventStatus(EventType, Event *)> EventHandler;
-
-  /**
-   * @ingroup base
-   */
-  class EventManager {
-  public:
-
-    void registerHandler(EventType type, EventHandler handler);
-
-    template<typename E>
-    void registerHandler(EventHandler handler) {
-      static_assert(std::is_base_of<Event, E>::value, "E must be an Event");
-      static_assert(E::type != INVALID_EVENT, "E must define its type");
-      registerHandler(E::type, handler);
-    }
-
-    template<typename E, typename R, typename T>
-    void registerHandler(R T::*pm, T *obj) {
-      static_assert(std::is_base_of<Event, E>::value, "E must be an Event");
-      static_assert(E::type != INVALID_EVENT, "E must define its type");
-      registerHandler(E::type, std::bind(pm, obj, std::placeholders::_1, std::placeholders::_2));
-    }
-
-    void triggerEvent(EventType type, Event *event);
-
-    template<typename E>
-    void triggerEvent(E *event) {
-      static_assert(std::is_base_of<Event, E>::value, "E must be an Event");
-      static_assert(E::type != INVALID_EVENT, "E must define its type");
-      triggerEvent(E::type, event);
-    }
-
-  private:
-    std::map<EventType, std::vector<EventHandler>> m_handlers;
   };
 
 }

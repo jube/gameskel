@@ -27,7 +27,7 @@ add_executable(game_template
   # base
   game/Assets.cc
   game/Clock.cc
-  game/Event.cc
+  game/EventManager.cc
   game/Log.cc
   game/Random.cc
   # graphics
