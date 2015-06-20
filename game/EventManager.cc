@@ -22,6 +22,7 @@
 #include "EventManager.h"
 
 #include <cassert>
+#include <algorithm>
 
 namespace game {
   EventManager::EventManager()
@@ -42,6 +43,15 @@ namespace game {
     EventHandlerId id = m_current_id++;
     it->second.push_back({ id, handler });
     return id;
+  }
+
+  void EventManager::removeHandler(EventHandlerId id) {
+    for (auto& handlers : m_handlers) {
+      auto& vec = handlers.second;
+      vec.erase(std::remove_if(vec.begin(), vec.end(), [id](const Handler& h) {
+        return h.id == id;
+      }), vec.end());
+    }
   }
 
   void EventManager::triggerEvent(EventType type, Event *event) {

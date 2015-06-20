@@ -71,6 +71,8 @@ namespace game {
       return registerHandler(E::type, std::bind(pm, obj, std::placeholders::_1, std::placeholders::_2));
     }
 
+    void removeHandler(EventHandlerId id);
+
     void triggerEvent(EventType type, Event *event);
 
     template<typename E>
