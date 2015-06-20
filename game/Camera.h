@@ -83,7 +83,7 @@ namespace game {
    */
   class FixedRatioCamera : public SceneCamera {
   public:
-    FixedRatioCamera(float ratio, float width, const sf::Vector2f& center = sf::Vector2f(0.0f, 0.0f));
+    FixedRatioCamera(float width, float height, const sf::Vector2f& center = sf::Vector2f(0.0f, 0.0f));
     virtual void update(sf::Event& event) override;
     virtual void configure(sf::RenderWindow& window) override;
 

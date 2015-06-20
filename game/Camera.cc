@@ -38,10 +38,10 @@ namespace game {
   }
 
 
-  FixedRatioCamera::FixedRatioCamera(float ratio, float width, const sf::Vector2f& center)
+  FixedRatioCamera::FixedRatioCamera(float width, float height, const sf::Vector2f& center)
   : SceneCamera(width, center)
-  , m_ratio(ratio)
-  , m_view(center, { width, width / ratio })
+  , m_ratio(width / height)
+  , m_view(center, { width, height })
   {
   }
 

@@ -32,14 +32,15 @@
 
 #include "config.h"
 
-static constexpr float SIZE = 100.0f;
+static constexpr float AREA_WIDTH = 100.0f;
+static constexpr float AREA_HEIGHT = 50.0f;
 
 class Background : public game::Entity {
 public:
 
   virtual void render(sf::RenderWindow& window) override {
-    sf::RectangleShape shape({ SIZE, SIZE / 2 });
-    shape.setOrigin(SIZE / 2, SIZE / 4);
+    sf::RectangleShape shape({ AREA_WIDTH, AREA_HEIGHT });
+    shape.setOrigin(AREA_WIDTH / 2, AREA_HEIGHT / 2);
     shape.setPosition(0.0f, 0.0f);
     shape.setFillColor(sf::Color(0xCC, 0xCC, 0xCC));
     window.draw(shape);
@@ -89,7 +90,7 @@ int main(int argc, char *argv[]) {
   // add cameras
   game::CameraManager cameras;
 
-  game::FixedRatioCamera mainCamera(2.0f, SIZE);
+  game::FixedRatioCamera mainCamera(AREA_WIDTH, AREA_HEIGHT);
   cameras.addCamera(mainCamera);
 
   game::HeadsUpCamera hudCamera(window);
