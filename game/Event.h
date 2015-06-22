@@ -41,6 +41,19 @@ namespace game {
     static const EventType type = INVALID_EVENT;
   };
 
+  /**
+   * @ingroup base
+   */
+  enum class EventStatus {
+    KEEP, /**< The handler must be kept */
+    DIE,  /**< The handler can be removed */
+  };
+
+  /**
+   * @ingroup base
+   */
+  typedef std::function<EventStatus(EventType, Event *)> EventHandler;
+
 }
 
 constexpr game::EventType operator"" _type(const char *str, std::size_t sz) {

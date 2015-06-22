@@ -33,19 +33,6 @@ namespace game {
   /**
    * @ingroup base
    */
-  enum class EventStatus {
-    KEEP, /**< The handler must be kept */
-    DIE,  /**< The handler can be removed */
-  };
-
-  /**
-   * @ingroup base
-   */
-  typedef std::function<EventStatus(EventType, Event *)> EventHandler;
-
-  /**
-   * @ingroup base
-   */
   typedef uint64_t EventHandlerId;
 
   /**
