@@ -22,7 +22,6 @@
 #ifndef GAME_EVENT_MANAGER_H
 #define GAME_EVENT_MANAGER_H
 
-#include <functional>
 #include <map>
 #include <vector>
 
