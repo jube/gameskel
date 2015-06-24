@@ -52,10 +52,7 @@ namespace game {
    */
   class SceneCamera : public Camera {
   public:
-    SceneCamera(float width, const sf::Vector2f& center)
-    : m_center(center)
-    {
-    }
+    SceneCamera(float width, const sf::Vector2f& center);
 
     float getWidth() const {
       return m_width;

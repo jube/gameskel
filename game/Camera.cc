@@ -38,6 +38,13 @@ namespace game {
   }
 
 
+  SceneCamera::SceneCamera(float width, const sf::Vector2f& center)
+  : m_width(width)
+  , m_center(center)
+  {
+  }
+
+
   FixedRatioCamera::FixedRatioCamera(float width, float height, const sf::Vector2f& center)
   : SceneCamera(width, center)
   , m_ratio(width / height)
