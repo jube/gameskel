@@ -28,6 +28,7 @@
 #include "game/EntityManager.h"
 #include "game/Log.h"
 #include "game/ResourceManager.h"
+#include "game/WindowGeometry.h"
 #include "game/WindowSettings.h"
 
 #include "config.h"
@@ -50,14 +51,14 @@ public:
 
 class Minimap : public game::Entity {
 public:
-  Minimap(game::HeadsUpCamera& camera)
-  : m_camera(camera)
+  Minimap(game::WindowGeometry& geometry)
+  : m_geometry(geometry)
   {
 
   }
 
   virtual void render(sf::RenderWindow& window) override {
-    sf::Vector2f pos = m_camera.transform({ -74.0f, -74.0f });
+    sf::Vector2f pos = m_geometry.getCornerPosition({ -74.0f, -74.0f });
 
     sf::RectangleShape shape({ 64, 64 });
     shape.setPosition(pos);
@@ -66,7 +67,7 @@ public:
   }
 
 private:
-  game::HeadsUpCamera& m_camera;
+  game::WindowGeometry& m_geometry;
 };
 
 int main(int argc, char *argv[]) {
@@ -78,6 +79,7 @@ int main(int argc, char *argv[]) {
   static constexpr unsigned INITIAL_HEIGHT = 576;
 
   game::WindowSettings settings(INITIAL_WIDTH, INITIAL_HEIGHT, "Game template (version " GAME_VERSION ")");
+  game::WindowGeometry geometry(INITIAL_WIDTH, INITIAL_HEIGHT);
 
   sf::RenderWindow window;
   settings.applyTo(window);
@@ -115,7 +117,7 @@ int main(int argc, char *argv[]) {
   mainEntities.addEntity(bg);
 
   game::EntityManager hudEntities;
-  Minimap map(hudCamera);
+  Minimap map(geometry);
   hudEntities.addEntity(map);
 
   // main loop
@@ -128,6 +130,7 @@ int main(int argc, char *argv[]) {
     while (window.pollEvent(event)) {
       actions.update(event);
       cameras.update(event);
+      geometry.update(event);
     }
 
     if (closeWindowAction.isActive()) {
@@ -145,6 +148,7 @@ int main(int argc, char *argv[]) {
       event.size.width = sz.x;
       event.size.height = sz.y;
       cameras.update(event);
+      geometry.update(event);
     }
 
     // update

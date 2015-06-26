@@ -111,8 +111,6 @@ namespace game {
     virtual void update(sf::Event& event) override;
     virtual void configure(sf::RenderWindow& window) override;
 
-    sf::Vector2f transform(const sf::Vector2f& v);
-
   private:
     sf::View m_view;
   };

@@ -38,6 +38,7 @@ add_executable(game_template
   game/Entity.cc
   game/EntityManager.cc
   game/ResourceManager.cc
+  game/WindowGeometry.cc
   game/WindowSettings.cc
   # model
   game/Model.cc

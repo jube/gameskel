@@ -131,11 +131,4 @@ namespace game {
     window.setView(m_view);
   }
 
-  sf::Vector2f HeadsUpCamera::transform(const sf::Vector2f& v) {
-    auto sz = m_view.getSize();
-    float x = v.x > 0 ? v.x : sz.x + v.x;
-    float y = v.y > 0 ? v.y : sz.y + v.y;
-    return { x, y };
-  }
-
 }
