@@ -50,6 +50,11 @@ namespace game {
       return registerHandler(E::type, handler);
     }
 
+    template<typename R, typename T>
+    EventHandlerId registerHandler(EventType type, R T::*pm, T *obj) {
+      return registerHandler(type, std::bind(pm, obj, std::placeholders::_1, std::placeholders::_2));
+    }
+
     template<typename E, typename R, typename T>
     EventHandlerId registerHandler(R T::*pm, T *obj) {
       static_assert(std::is_base_of<Event, E>::value, "E must be an Event");
