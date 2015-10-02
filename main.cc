@@ -34,7 +34,7 @@
 #include "config.h"
 
 static constexpr float AREA_WIDTH = 100.0f;
-static constexpr float AREA_HEIGHT = 50.0f;
+static constexpr float AREA_HEIGHT = 70.0f;
 
 class Background : public game::Entity {
 public:

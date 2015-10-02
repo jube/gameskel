@@ -68,13 +68,13 @@ namespace game {
       vp.left = 0.0f;
       vp.width = 1.0;
 
-      vp.top = (1 - r) / m_ratio;
+      vp.top = (1 - r) / 2;
       vp.height = r;
     } else {
       vp.top = 0.0f;
       vp.height = 1.0f;
 
-      vp.left = (1 - 1 / r) / m_ratio;
+      vp.left = (1 - 1 / r) / 2;
       vp.width = 1 / r;
     }
 
