@@ -37,11 +37,13 @@ namespace game {
 
     void update(sf::Event& event);
 
-    float getXCentered(float w);
-    float getXFromRight(float x);
+    float getXCentered(float width);
+    float getXFromRight(float width);
+    float getXRatio(float r, float width);
 
-    float getYCentered(float h);
-    float getYFromBottom(float y);
+    float getYCentered(float height);
+    float getYFromBottom(float height);
+    float getYRatio(float r, float height);
 
     sf::Vector2f getCornerPosition(const sf::Vector2f& pos);
 
