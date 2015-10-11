@@ -33,8 +33,8 @@ namespace game {
    */
   class WindowSettings {
   public:
-    WindowSettings(unsigned initial_width, unsigned initial_height, std::string title)
-    : m_mode(initial_width, initial_height)
+    WindowSettings(unsigned initialWidth, unsigned initialHeight, std::string title)
+    : m_mode(initialWidth, initialHeight)
     , m_title(std::move(title))
     , m_fullscreen(false)
     {
