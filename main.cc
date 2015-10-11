@@ -92,7 +92,7 @@ int main(int argc, char *argv[]) {
   // add cameras
   game::CameraManager cameras;
 
-  game::FixedRatioCamera mainCamera(AREA_WIDTH, AREA_HEIGHT);
+  game::FixedRatioCamera mainCamera(window, AREA_WIDTH, AREA_HEIGHT);
   cameras.addCamera(mainCamera);
 
   game::HeadsUpCamera hudCamera(window);

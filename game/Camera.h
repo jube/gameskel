@@ -52,27 +52,13 @@ namespace game {
    */
   class SceneCamera : public Camera {
   public:
-    SceneCamera(float width, const sf::Vector2f& center);
+    SceneCamera(const sf::Vector2f& center);
 
-    float getWidth() const {
-      return m_width;
-    }
+    const sf::Vector2f& getCenter() const;
+    void setCenter(const sf::Vector2f& center);
 
-    void setWidth(float width) {
-      m_width = width;
-    }
-
-    const sf::Vector2f& getCenter() const {
-      return m_center;
-    }
-
-    void setCenter(const sf::Vector2f& center) {
-      m_center = center;
-    }
-
-  private:
-    float m_width;
-    sf::Vector2f m_center;
+  protected:
+    sf::View m_view;
   };
 
   /**
@@ -80,13 +66,18 @@ namespace game {
    */
   class FixedRatioCamera : public SceneCamera {
   public:
-    FixedRatioCamera(float width, float height, const sf::Vector2f& center = sf::Vector2f(0.0f, 0.0f));
+    FixedRatioCamera(sf::RenderWindow& window, float width, float height, const sf::Vector2f& center = sf::Vector2f(0.0f, 0.0f));
+
+    void setSceneSize(float width, float height);
+
     virtual void update(sf::Event& event) override;
     virtual void configure(sf::RenderWindow& window) override;
 
   private:
+    void computeViewport(float screenWidth, float screenHeight);
+
+  private:
     float m_ratio;
-    sf::View m_view;
   };
 
   /**
@@ -94,12 +85,15 @@ namespace game {
    */
   class FlexibleCamera : public SceneCamera {
   public:
-    FlexibleCamera(float width, const sf::Vector2f& center = sf::Vector2f(0.0f, 0.0f));
+    FlexibleCamera(sf::RenderWindow& window, float width, const sf::Vector2f& center = sf::Vector2f(0.0f, 0.0f));
+
+    void setSceneWidth(float width);
+
     virtual void update(sf::Event& event) override;
     virtual void configure(sf::RenderWindow& window) override;
 
   private:
-    sf::View m_view;
+    void computeSceneSize(float screenWidth, float screenHeight);
   };
 
   /**

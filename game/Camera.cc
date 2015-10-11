@@ -38,18 +38,33 @@ namespace game {
   }
 
 
-  SceneCamera::SceneCamera(float width, const sf::Vector2f& center)
-  : m_width(width)
-  , m_center(center)
+  SceneCamera::SceneCamera(const sf::Vector2f& center)
   {
+    m_view.setCenter(center);
+  }
+
+  const sf::Vector2f& SceneCamera::getCenter() const {
+    return m_view.getCenter();
+  }
+
+  void SceneCamera::setCenter(const sf::Vector2f& center) {
+    m_view.setCenter(center);
   }
 
 
-  FixedRatioCamera::FixedRatioCamera(float width, float height, const sf::Vector2f& center)
-  : SceneCamera(width, center)
+  FixedRatioCamera::FixedRatioCamera(sf::RenderWindow& window, float width, float height, const sf::Vector2f& center)
+  : SceneCamera(center)
   , m_ratio(width / height)
-  , m_view(center, { width, height })
   {
+    m_view.setSize(width, height);
+
+    auto size = window.getSize();
+    computeViewport(size.x, size.y);
+  }
+
+  void FixedRatioCamera::setSceneSize(float width, float height) {
+    m_ratio = width / height;
+    m_view.setSize(width, height);
   }
 
   void FixedRatioCamera::update(sf::Event& event) {
@@ -57,10 +72,15 @@ namespace game {
       return;
     }
 
-    float w = static_cast<float>(event.size.width);
-    float h = static_cast<float>(event.size.height);
+    computeViewport(event.size.width, event.size.height);
+  }
 
-    float r = w / h / m_ratio;
+  void FixedRatioCamera::configure(sf::RenderWindow& window) {
+    window.setView(m_view);
+  }
+
+  void FixedRatioCamera::computeViewport(float screenWidth, float screenHeight) {
+    float r = screenWidth / screenHeight / m_ratio;
 
     sf::FloatRect vp;
 
@@ -81,16 +101,19 @@ namespace game {
     m_view.setViewport(vp);
   }
 
-  void FixedRatioCamera::configure(sf::RenderWindow& window) {
-    m_view.setCenter(getCenter());
-    window.setView(m_view);
+
+  FlexibleCamera::FlexibleCamera(sf::RenderWindow& window, float width, const sf::Vector2f& center)
+  : SceneCamera(center)
+  {
+    auto size = window.getSize();
+    float height = width / size.x * size.y;
+    m_view.setSize(width, height);
   }
 
-
-  FlexibleCamera::FlexibleCamera(float width, const sf::Vector2f& center)
-  : SceneCamera(width, center)
-  {
-
+  void FlexibleCamera::setSceneWidth(float width) {
+    auto size = m_view.getSize();
+    float height = width / size.x * size.y;
+    m_view.setSize(width, height);
   }
 
   void FlexibleCamera::update(sf::Event& event) {
@@ -98,16 +121,13 @@ namespace game {
       return;
     }
 
-    float w = static_cast<float>(event.size.width);
-    float h = static_cast<float>(event.size.height);
-
-    float height = getWidth() / w * h;
-
-    m_view.setSize(getWidth(), height);
+    auto size = m_view.getSize();
+    float width = size.x;
+    float height = width / event.size.width * event.size.height;
+    m_view.setSize(width, height);
   }
 
   void FlexibleCamera::configure(sf::RenderWindow& window) {
-    m_view.setCenter(getCenter());
     window.setView(m_view);
   }
 
