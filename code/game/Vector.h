@@ -235,7 +235,7 @@ namespace game {
   }
 
   /**
-   * @brief Compute the dot product of two vectors
+   * @brief Compute the angle of a vector
    *
    * @ingroup base
    */

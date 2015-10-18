@@ -1,9 +1,11 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 2.8)
 
 project(GAME
-  VERSION 0.2.0
   LANGUAGES C CXX
 )
+
+set(PROJECT_NAME "TODO")
+set(PROJECT_VERSION 0.3.0)
 
 include(GNUInstallDirs)
 
@@ -16,48 +18,10 @@ pkg_check_modules(SFML2 REQUIRED sfml-graphics>=2.1 sfml-audio>=2.1)
 add_definitions(-Wall -g -O2)
 add_definitions(-std=c++11)
 
-include_directories(${Boost_INCLUDE_DIRS})
-include_directories(${SFML2_INCLUDE_DIRS})
-
-include_directories(${CMAKE_CURRENT_BINARY_DIR})
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config.h.in ${CMAKE_CURRENT_BINARY_DIR}/config.h @ONLY)
-
-add_executable(game_template
-  main.cc
-  # base
-  game/AssetManager.cc
-  game/Clock.cc
-  game/EventManager.cc
-  game/Log.cc
-  game/Random.cc
-  # graphics
-  game/Action.cc
-  game/Animation.cc
-  game/Camera.cc
-  game/Control.cc
-  game/Entity.cc
-  game/EntityManager.cc
-  game/ResourceManager.cc
-  game/WindowGeometry.cc
-  game/WindowSettings.cc
-  # model
-  game/Model.cc
-  game/ModelManager.cc
-)
-
-target_link_libraries(game_template
-  ${CMAKE_THREAD_LIBS_INIT}
-  ${Boost_LIBRARIES}
-  ${SFML2_LIBRARIES}
-)
+add_subdirectory(code)
 
 install(
-  TARGETS game_template
-  RUNTIME DESTINATION games
-)
-
-install(
-  DIRECTORY "${CMAKE_SOURCE_DIR}/share/${PROJECT_NAME}"
+  DIRECTORY "${CMAKE_SOURCE_DIR}/data/${PROJECT_NAME}"
   DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/games"
 )
 
