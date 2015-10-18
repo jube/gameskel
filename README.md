@@ -23,7 +23,7 @@ Then you have to use [CMake](http://www.cmake.org/) to build the project:
     cd gameskel
     mkdir build
     cd build
-    cmake ../src
+    cmake ..
     make
 
 Finally, you can install the files (you may need root permissions):
@@ -32,7 +32,7 @@ Finally, you can install the files (you may need root permissions):
 
 ## How to use
 
-The best way to use this skel is to copy the game directory in your tree.
+The best way to use this skel is to copy the game directory in your tree. Or to copy the whole skeleton.
 
 ## Authors
 
