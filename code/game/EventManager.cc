@@ -19,23 +19,39 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
-#include "Event.h"
+#include "EventManager.h"
 
 #include <cassert>
+#include <algorithm>
 
 namespace game {
+  EventManager::EventManager()
+  : m_current_id(0)
+  {
+  }
 
-  void EventManager::registerHandler(EventType type, EventHandler handler) {
+  EventHandlerId EventManager::registerHandler(EventType type, EventHandler handler) {
     assert(handler);
     auto it = m_handlers.find(type);
 
     if (it == m_handlers.end()) {
       bool inserted;
-      std::tie(it, inserted) = m_handlers.insert(std::make_pair(type, std::vector<EventHandler>()));
+      std::tie(it, inserted) = m_handlers.insert(std::make_pair(type, std::vector<Handler>()));
       assert(inserted);
     }
 
-    it->second.push_back(handler);
+    EventHandlerId id = m_current_id++;
+    it->second.push_back({ id, handler });
+    return id;
+  }
+
+  void EventManager::removeHandler(EventHandlerId id) {
+    for (auto& handlers : m_handlers) {
+      auto& vec = handlers.second;
+      vec.erase(std::remove_if(vec.begin(), vec.end(), [id](const Handler& h) {
+        return h.id == id;
+      }), vec.end());
+    }
   }
 
   void EventManager::triggerEvent(EventType type, Event *event) {
@@ -45,10 +61,10 @@ namespace game {
       return;
     }
 
-    std::vector<EventHandler> kept;
+    std::vector<Handler> kept;
 
-    for (auto handler : it->second) {
-      if (handler(type, event) == EventStatus::KEEP) {
+    for (auto& handler : it->second) {
+      if (handler.handler(type, event) == EventStatus::KEEP) {
         kept.push_back(handler);
       }
     }

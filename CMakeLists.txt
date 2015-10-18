@@ -1,9 +1,11 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 2.8)
 
 project(GAME
-  VERSION 0.2.0
   LANGUAGES C CXX
 )
+
+set(PROJECT_NAME "TODO")
+set(PROJECT_VERSION 0.3.0)
 
 include(GNUInstallDirs)
 
@@ -16,10 +18,10 @@ pkg_check_modules(SFML2 REQUIRED sfml-graphics>=2.1 sfml-audio>=2.1)
 add_definitions(-Wall -g -O2)
 add_definitions(-std=c++11)
 
-add_subdirectory(template)
+add_subdirectory(code)
 
 install(
-  DIRECTORY "${CMAKE_SOURCE_DIR}/share/foo"
+  DIRECTORY "${CMAKE_SOURCE_DIR}/data/${PROJECT_NAME}"
   DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/games"
 )
 

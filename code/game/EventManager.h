@@ -19,63 +19,55 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
-#ifndef GAME_EVENT_H
-#define GAME_EVENT_H
+#ifndef GAME_EVENT_MANAGER_H
+#define GAME_EVENT_MANAGER_H
 
-#include <functional>
 #include <map>
 #include <vector>
 
-#include "Id.h"
+#include "Event.h"
 
 namespace game {
-  /**
-   * @ingroup base
-   */
-  typedef Id EventType;
-
-#define INVALID_EVENT INVALID_ID
 
   /**
    * @ingroup base
    */
-  struct Event {
-    static const EventType type = INVALID_EVENT;
-  };
-
-  /**
-   * @ingroup base
-   */
-  enum class EventStatus {
-    KEEP, /**< The handler must be kept */
-    DIE,  /**< The handler can be removed */
-  };
-
-  /**
-   * @ingroup base
-   */
-  typedef std::function<EventStatus(EventType, Event *)> EventHandler;
+  typedef uint64_t EventHandlerId;
 
   /**
    * @ingroup base
    */
   class EventManager {
   public:
+    EventManager();
 
-    void registerHandler(EventType type, EventHandler handler);
+    EventHandlerId registerHandler(EventType type, EventHandler handler);
 
     template<typename E>
-    void registerHandler(EventHandler handler) {
+    EventHandlerId registerHandler(EventHandler handler) {
       static_assert(std::is_base_of<Event, E>::value, "E must be an Event");
       static_assert(E::type != INVALID_EVENT, "E must define its type");
-      registerHandler(E::type, handler);
+      return registerHandler(E::type, handler);
+    }
+
+    template<typename R, typename T>
+    EventHandlerId registerHandler(EventType type, R T::*pm, T *obj) {
+      return registerHandler(type, std::bind(pm, obj, std::placeholders::_1, std::placeholders::_2));
     }
 
     template<typename E, typename R, typename T>
-    void registerHandler(R T::*pm, T *obj) {
+    EventHandlerId registerHandler(R T::*pm, T *obj) {
       static_assert(std::is_base_of<Event, E>::value, "E must be an Event");
       static_assert(E::type != INVALID_EVENT, "E must define its type");
-      registerHandler(E::type, std::bind(pm, obj, std::placeholders::_1, std::placeholders::_2));
+      return registerHandler(E::type, std::bind(pm, obj, std::placeholders::_1, std::placeholders::_2));
+    }
+
+    void removeHandler(EventHandlerId id);
+
+    void removeHandlers(std::initializer_list<EventHandlerId> ids) {
+      for (auto id : ids) {
+        removeHandler(id);
+      }
     }
 
     void triggerEvent(EventType type, Event *event);
@@ -88,13 +80,15 @@ namespace game {
     }
 
   private:
-    std::map<EventType, std::vector<EventHandler>> m_handlers;
+    struct Handler {
+      EventHandlerId id;
+      EventHandler handler;
+    };
+
+    EventHandlerId m_current_id;
+    std::map<EventType, std::vector<Handler>> m_handlers;
   };
 
 }
 
-constexpr game::EventType operator"" _type(const char *str, std::size_t sz) {
-  return game::Hash(str, sz, sz);
-}
-
-#endif // GAME_EVENT_H
+#endif // GAME_EVENT_MANAGER_H

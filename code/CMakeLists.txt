@@ -7,9 +7,9 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config.h.in ${CMAKE_CURRENT_BINARY_DI
 add_executable(game_template
   main.cc
   # base
-  game/Assets.cc
+  game/AssetManager.cc
   game/Clock.cc
-  game/Event.cc
+  game/EventManager.cc
   game/Log.cc
   game/Random.cc
   # graphics
@@ -19,7 +19,9 @@ add_executable(game_template
   game/Control.cc
   game/Entity.cc
   game/EntityManager.cc
-  game/Resources.cc
+  game/ResourceManager.cc
+  game/WindowGeometry.cc
+  game/WindowSettings.cc
   # model
   game/Model.cc
   game/ModelManager.cc
@@ -35,4 +37,3 @@ install(
   TARGETS game_template
   RUNTIME DESTINATION games
 )
-

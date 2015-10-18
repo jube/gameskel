@@ -19,6 +19,7 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
+#include <cassert>
 #include <cstdio>
 
 #include "game/Action.h"
@@ -26,18 +27,21 @@
 #include "game/Clock.h"
 #include "game/EntityManager.h"
 #include "game/Log.h"
-#include "game/Resources.h"
+#include "game/ResourceManager.h"
+#include "game/WindowGeometry.h"
+#include "game/WindowSettings.h"
 
 #include "config.h"
 
-static constexpr float SIZE = 100.0f;
+static constexpr float AREA_WIDTH = 100.0f;
+static constexpr float AREA_HEIGHT = 70.0f;
 
 class Background : public game::Entity {
 public:
 
   virtual void render(sf::RenderWindow& window) override {
-    sf::RectangleShape shape({ SIZE, SIZE / 2 });
-    shape.setOrigin(SIZE / 2, SIZE / 4);
+    sf::RectangleShape shape({ AREA_WIDTH, AREA_HEIGHT });
+    shape.setOrigin(AREA_WIDTH / 2, AREA_HEIGHT / 2);
     shape.setPosition(0.0f, 0.0f);
     shape.setFillColor(sf::Color(0xCC, 0xCC, 0xCC));
     window.draw(shape);
@@ -47,14 +51,14 @@ public:
 
 class Minimap : public game::Entity {
 public:
-  Minimap(game::HeadsUpCamera& camera)
-  : m_camera(camera)
+  Minimap(game::WindowGeometry& geometry)
+  : m_geometry(geometry)
   {
 
   }
 
   virtual void render(sf::RenderWindow& window) override {
-    sf::Vector2f pos = m_camera.transform({ -74.0f, -74.0f });
+    sf::Vector2f pos = m_geometry.getCornerPosition({ -74.0f, -74.0f });
 
     sf::RectangleShape shape({ 64, 64 });
     shape.setPosition(pos);
@@ -63,9 +67,8 @@ public:
   }
 
 private:
-  game::HeadsUpCamera& m_camera;
+  game::WindowGeometry& m_geometry;
 };
-
 
 int main(int argc, char *argv[]) {
   game::Log::setLevel(game::Log::INFO);
@@ -75,7 +78,11 @@ int main(int argc, char *argv[]) {
   static constexpr unsigned INITIAL_WIDTH = 1024;
   static constexpr unsigned INITIAL_HEIGHT = 576;
 
-  sf::RenderWindow window(sf::VideoMode(INITIAL_WIDTH, INITIAL_HEIGHT), "Game template (version " GAME_VERSION ")");
+  game::WindowSettings settings(INITIAL_WIDTH, INITIAL_HEIGHT, "Game template (version " GAME_VERSION ")");
+  game::WindowGeometry geometry(INITIAL_WIDTH, INITIAL_HEIGHT);
+
+  sf::RenderWindow window;
+  settings.applyTo(window);
   window.setKeyRepeatEnabled(false);
 
   // load resources
@@ -85,7 +92,7 @@ int main(int argc, char *argv[]) {
   // add cameras
   game::CameraManager cameras;
 
-  game::FixedRatioCamera mainCamera(2.0f, SIZE);
+  game::FixedRatioCamera mainCamera(window, AREA_WIDTH, AREA_HEIGHT);
   cameras.addCamera(mainCamera);
 
   game::HeadsUpCamera hudCamera(window);
@@ -99,6 +106,10 @@ int main(int argc, char *argv[]) {
   closeWindowAction.addKeyControl(sf::Keyboard::Escape);
   actions.addAction(closeWindowAction);
 
+  game::Action fullscreenAction("Fullscreen");
+  fullscreenAction.addKeyControl(sf::Keyboard::F);
+  actions.addAction(fullscreenAction);
+
   // add entities
 
   game::EntityManager mainEntities;
@@ -106,7 +117,7 @@ int main(int argc, char *argv[]) {
   mainEntities.addEntity(bg);
 
   game::EntityManager hudEntities;
-  Minimap map(hudCamera);
+  Minimap map(geometry);
   hudEntities.addEntity(map);
 
   // main loop
@@ -119,10 +130,25 @@ int main(int argc, char *argv[]) {
     while (window.pollEvent(event)) {
       actions.update(event);
       cameras.update(event);
+      geometry.update(event);
     }
 
     if (closeWindowAction.isActive()) {
       window.close();
+    }
+
+    if (fullscreenAction.isActive()) {
+      settings.toggleFullscreen();
+      settings.applyTo(window);
+      auto sz = window.getSize();
+
+      // fake resize event (not sent when going fullscreen before SFML 2.3.1)
+      sf::Event event;
+      event.type = sf::Event::Resized;
+      event.size.width = sz.x;
+      event.size.height = sz.y;
+      cameras.update(event);
+      geometry.update(event);
     }
 
     // update
@@ -141,6 +167,8 @@ int main(int argc, char *argv[]) {
     hudEntities.render(window);
 
     window.display();
+
+    actions.reset();
   }
 
   return 0;

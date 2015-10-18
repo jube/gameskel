@@ -22,6 +22,8 @@
 #ifndef GAME_ID_H
 #define GAME_ID_H
 
+#include <cstdint>
+
 namespace game {
 
   /**

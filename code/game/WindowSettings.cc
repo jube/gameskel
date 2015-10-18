@@ -19,35 +19,30 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
-#ifndef GAME_ENTITY_MANAGER_H
-#define GAME_ENTITY_MANAGER_H
-
-#include <vector>
-
-#include <SFML/Graphics.hpp>
-
-#include "Entity.h"
+#include "WindowSettings.h"
 
 namespace game {
 
-  /**
-   * @ingroup graphics
-   */
-  class EntityManager {
-  public:
+  void WindowSettings::toggleFullscreen() {
+    m_fullscreen = !m_fullscreen;
+  }
 
-    void update(float dt);
-    void render(sf::RenderWindow& window);
+  void WindowSettings::applyTo(sf::Window& window) {
+    sf::VideoMode mode = m_mode;
+    sf::Uint32 style = sf::Style::Default;
 
-    void addEntity(Entity& e);
-    Entity *removeEntity(Entity *e);
+    if (m_fullscreen) {
+      auto size = window.getSize();
+      m_mode.width = size.x;
+      m_mode.height = size.y;
 
-  private:
-    std::vector<Entity *> m_entities;
-  };
+      std::vector<sf::VideoMode> modes = sf::VideoMode::getFullscreenModes();
+      mode = modes.front();
 
+      style |= sf::Style::Fullscreen;
+    }
+
+    window.create(mode, m_title, style, m_settings);
+  }
 
 }
-
-
-#endif // GAME_ENTITY_MANAGER_H
