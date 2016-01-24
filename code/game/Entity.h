@@ -33,7 +33,7 @@ namespace game {
   public:
     Entity(int priority = 0)
     : m_priority(priority)
-    , m_alive(true)
+    , m_liveness(Liveness::ALIVE)
     {
     }
 
@@ -44,19 +44,24 @@ namespace game {
     }
 
     bool isAlive() const {
-      return m_alive;
+      return m_liveness == Liveness::ALIVE;
     }
 
     void kill() {
-      m_alive = false;
+      m_liveness = Liveness::DEAD;
     }
 
     virtual void update(float dt);
     virtual void render(sf::RenderWindow& window);
 
   private:
+    enum class Liveness : int {
+      ALIVE,
+      DEAD,
+    };
+
     const int m_priority;
-    bool m_alive;
+    Liveness m_liveness;
   };
 
 }
