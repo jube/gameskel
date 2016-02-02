@@ -60,7 +60,7 @@ namespace game {
       DEAD,
     };
 
-    const int m_priority;
+    int m_priority;
     Liveness m_liveness;
   };
 
